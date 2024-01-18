@@ -22,7 +22,12 @@ class Product extends require('../templates/settings/master') {
                 update: true
             },
             imageUrls: {
-                schema: { type: 'array' },
+                schema: {
+                    type: 'array',
+                    items: {
+                        type: 'string'
+                    }
+                },
                 model: { type: Array },
                 insert: true,
                 update: true,
@@ -42,10 +47,11 @@ class Product extends require('../templates/settings/master') {
                 update: true
             },
             colectionType: {
-                schema: { type: 'string', enum: ['NoiBatPhanPhat', 'SanPhamMoiToanh', 'ChoNeHotDi','DoTuoiRoiRoi','DoKhoChanAi'] },
+                schema: { type: 'string', enum: ['NoiBatPhanPhat', 'SanPhamMoiToanh', 'ChoNeHotDi', 'DoTuoiRoiRoi', 'DoKhoChanAi'] },
                 model: { type: String },
                 insert: true,
                 update: true,
+                filter: true,
                 required: true
             },
             soldCount: {
