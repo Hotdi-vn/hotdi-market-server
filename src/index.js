@@ -105,6 +105,7 @@ fastify.register(require('@fastify/swagger-ui'), {
 fastify.register(require('./routers/sellers'));
 fastify.register(require('./routers/categories'));
 fastify.register(require('./routers/products'));
+fastify.register(require('./routers/banners'));
 
 // Declare a route
 fastify.get('/', function (request, reply) {

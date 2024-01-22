@@ -9,5 +9,10 @@ URL: https://api.dev.hotdi.vn/market
     * `PUT /api/v1/market/products/{id}`
     * `DELETE /api/v1/market/products/{id}`
 
+    * `POST /api/v1/market/banners`
+    * `GET /api/v1/market/banners`
+    * `GET /api/v1/market/banners/{id}`
+    * `PUT /api/v1/market/banners/{id}`
+    * `DELETE /api/v1/market/banners/{id}`
 # API DOCUMENTATION
 URL: https://api.dev.hotdi.vn/market/docs
