@@ -54,6 +54,13 @@ class Product extends require('../templates/settings/master') {
                 filter: true,
                 required: true
             },
+            categoryId: {
+                schema: { type: 'string' },
+                model: { type: String },
+                insert: true,
+                update: true,
+                filter: true
+            },
             soldCount: {
                 schema: { type: 'number' },
                 model: { type: Number, default: 0 }
