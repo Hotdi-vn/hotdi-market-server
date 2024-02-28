@@ -65,6 +65,14 @@ class Product extends require('../templates/settings/master') {
                 schema: { type: 'number' },
                 model: { type: Number, default: 0 }
             },
+            status: {
+                schema: { type: 'string', enum: ['instock', 'outofstock', 'hidden']},
+                model: { type: String },
+                insert: true,
+                update: true,
+                filter: true,
+                required: true
+            },
             createdBy: {
                 schema: { type: 'string' },
                 model: { type: String }
