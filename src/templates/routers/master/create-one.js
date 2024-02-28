@@ -1,7 +1,8 @@
 class CreateOneRouter {
-    constructor(settings, handler) {
+    constructor(settings, handler, authorization=false) {
         this.settings = settings;
         this.handler = handler;
+        this.authorization = authorization;
     }
     routes = async(fastify, options) => {
         const createOneSchema = {
@@ -37,7 +38,12 @@ class CreateOneRouter {
                 }
             }
         }
-        fastify.post(`/v1/${this.settings.resource}`, { onRequest: [async (request, reply) => await fastify.authenticate(request, reply)], schema: createOneSchema }, this.handler.createOne);
+        const decoration = { schema: createOneSchema }
+        decoration.onRequest = [async (request, reply) => await fastify.authenticate(request, reply)]
+        if (this.authorization) {
+            decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource,'create'))
+        }
+        fastify.post(`/v1/${this.settings.resource}`, decoration, this.handler.createOne);
     }
 }
 module.exports = CreateOneRouter;

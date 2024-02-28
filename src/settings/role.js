@@ -1,10 +1,10 @@
-class Permission extends require('../templates/settings/master') {
+class Role extends require('../templates/settings/master') {
     constructor() {
         super();
-        super.resource = 'permissions';
+        super.resource = 'roles';
         super.settings = {
-            _id: { // userId
-                schema: { type: 'string' },
+            _id: {
+                schema: { type: 'string' , enum: ['admin', 'buyer', 'seller']},
                 model: { type: String },
                 insert: true
             },
@@ -12,12 +12,6 @@ class Permission extends require('../templates/settings/master') {
             permissions: {
                 schema: { type: 'object', additionalProperties:true, description: 'permission: {resource: {action: {filters}}}' },
                 model: { type: Object },
-                insert: true,
-                update: true
-            },
-            roles: {
-                schema: { type: 'array', items: { type: 'string', enum: ['admin', 'buyer', 'seller'] } },
-                model: { type: Array },
                 insert: true,
                 update: true
             },
@@ -46,8 +40,8 @@ class Permission extends require('../templates/settings/master') {
 }
 
 // caching object setting
-if (!global.Permission) {
-    global.Permission = new Permission();
+if (!global.Role) {
+    global.Role = new Role();
 }
 
-module.exports = global.Permission;
+module.exports = global.Role;
