@@ -1,7 +1,8 @@
 class UpdateOneRouter {
-    constructor(settings, handler) {
+    constructor(settings, handler, authorization=false) {
         this.settings = settings;
         this.handler = handler;
+        this.authorization = authorization;
     }
     routes = async(fastify, options) => {
         const updateOneSchema = {
@@ -46,7 +47,12 @@ class UpdateOneRouter {
                 }
             }
         }
-        fastify.put(`/v1/${this.settings.resource}/:_id`, { onRequest: [async (request, reply) => await fastify.authenticate(request, reply)], schema: updateOneSchema }, this.handler.updateOne);
+        const decoration = { schema: updateOneSchema }
+        decoration.onRequest = [async (request, reply) => await fastify.authenticate(request, reply)]
+        if (this.authorization) {
+            decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource,'update'))
+        }
+        fastify.put(`/v1/${this.settings.resource}/:_id`, decoration, this.handler.updateOne);
     }
 }
 

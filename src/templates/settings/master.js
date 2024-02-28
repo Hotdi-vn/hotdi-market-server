@@ -71,7 +71,20 @@ class Settings {
         for (const key in this.settings) {
             if (this.settings[key].update) {
                 if (sender[key] != null && sender[key] != undefined) {
-                    object[key] = sender[key];
+                    if (this.settings[key].model.type != Array) {
+                        object[key] = sender[key];
+                    } else {
+                        if (Array.isArray(sender[key])) {
+                            if (object[key] == undefined) {
+                                object[key] = [];
+                            }
+                            for (const item of sender[key]) {
+                                if (object[key].indexOf(item) == -1) {
+                                object[key].push(item);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

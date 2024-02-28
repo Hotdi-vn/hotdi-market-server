@@ -1,7 +1,8 @@
 class DeleteOneRouter {
-    constructor(settings, handler) {
+    constructor(settings, handler, authorization = false) {
         this.settings = settings;
         this.handler = handler;
+        this.authorization = authorization;
     }
     routes = async(fastify, options) => {
         const deleteOneSchema = {
@@ -45,6 +46,11 @@ class DeleteOneRouter {
                     },
                 }
             }
+        }
+        const decoration = { schema: deleteOneSchema }
+        decoration.onRequest = [async(request, reply) => await fastify.authenticate(request, reply)]
+        if (this.authorization) {
+            decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply, this.settings.resource, 'delete'))
         }
         fastify.delete(`/v1/${this.settings.resource}/:_id`, { onRequest: [async (request, reply) => await fastify.authenticate(request, reply)], schema: deleteOneSchema }, this.handler.deleteOne);
     }

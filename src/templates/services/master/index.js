@@ -5,6 +5,9 @@ class Service {
         this.model = model;
         this.settings = settings;
     }
+    register = (name, func) => {
+        this[name] = func;
+    }
     getOne = async (id) => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -58,9 +61,7 @@ class Service {
                 this.settings.extractInsertDataFromSender(item, senderData);
                 if (item._id == null) {
                     item._id = this.generateId(item);
-                } else {
-                    item._id = stringHelper.tokenize(item._id);
-                }
+                } 
                 const newItem = await item.save();
                 resolve(newItem);
             } catch (error) {
@@ -72,8 +73,9 @@ class Service {
         return new Promise(async (resolve, reject) => {
             try {
                 const item = await this.model.findById(_id);
-                //console.log(post);
-                if (!item || item.createdBy != requesterId) {
+                //console.log(item);
+                //if (!item || item.createdBy != requesterId) {
+                if (!item) {
                     reject({ code: 'ITEM_NOT_FOUND' });
                     return;
                 }

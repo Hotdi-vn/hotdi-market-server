@@ -39,6 +39,7 @@ fastify.decorate('authenticate', async function (request, reply) {
     }
 });
 
+const permissionService = require('./services/permissions');
 fastify.decorate('authorize', async function (request, reply, resource, action) {
     //return true;
     // action: create, read, update, delete
@@ -50,10 +51,10 @@ fastify.decorate('authorize', async function (request, reply, resource, action) 
         return;
     }
 
-    const appCode = request.params.appCode;
-    const permission = await userService.getPermission(appCode, userId, resource, action);
+    const permission = await permissionService.getPermission(userId, resource, action);
+    console.log(permission);
     if (permission) {
-        request.permission = permission;
+        request.permission = permission;// for use in route handler to check if permission is allowed on specific resource (filters applied using permissionService.hasRight)
         return;
     }
 
@@ -106,6 +107,8 @@ fastify.register(require('./routers/sellers'));
 fastify.register(require('./routers/categories'));
 fastify.register(require('./routers/products'));
 fastify.register(require('./routers/banners'));
+fastify.register(require('./routers/permissions'));
+fastify.register(require('./routers/roles'));
 
 // Declare a route
 fastify.get('/', function (request, reply) {
