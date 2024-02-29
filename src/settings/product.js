@@ -9,17 +9,18 @@ class Product extends require('../templates/settings/master') {
                 isKey: true
             },
             name: {
-                schema: { type: 'string' },
+                schema: { type: 'string', minLength: 1, maxLength: 120 },
                 model: { type: String },
                 insert: true,
                 update: true,
                 required: true
             },
             description: {
-                schema: { type: 'string' },
+                schema: { type: 'string', minLength: 1, maxLength: 5000 },
                 model: { type: String },
                 insert: true,
-                update: true
+                update: true,
+                required: true
             },
             imageUrls: {
                 schema: {
@@ -59,13 +60,22 @@ class Product extends require('../templates/settings/master') {
                 model: { type: String },
                 insert: true,
                 update: true,
-                filter: true
+                filter: true,
+                required: true
             },
-            soldCount: {
+            inventoryEnabled: {
+                schema: { type: 'boolean' },
+                model: { type: Boolean, default: true },
+                insert: true,
+                update: true
+            },
+            stockQuantity: {
                 schema: { type: 'number' },
-                model: { type: Number, default: 0 }
+                model: { type: Number, default: 0 },
+                insert: true,
+                update: true
             },
-            status: {
+            inventoryStatus: {
                 schema: { type: 'string', enum: ['instock', 'outofstock', 'hidden']},
                 model: { type: String },
                 insert: true,
@@ -73,6 +83,11 @@ class Product extends require('../templates/settings/master') {
                 filter: true,
                 required: true
             },
+            soldCount: {
+                schema: { type: 'number' },
+                model: { type: Number, default: 0 }
+            },
+            
             createdBy: {
                 schema: { type: 'string' },
                 model: { type: String }
