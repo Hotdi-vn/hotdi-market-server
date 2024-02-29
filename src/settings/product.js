@@ -52,8 +52,7 @@ class Product extends require('../templates/settings/master') {
                 model: { type: String },
                 insert: true,
                 update: true,
-                filter: true,
-                required: true
+                filter: true
             },
             categoryId: {
                 schema: { type: 'string' },
@@ -63,9 +62,9 @@ class Product extends require('../templates/settings/master') {
                 filter: true,
                 required: true
             },
-            inventoryEnabled: {
-                schema: { type: 'boolean' },
-                model: { type: Boolean, default: true },
+            inventoryManagementOption: {
+                schema: { type: 'string', enum: ["on","off"] },
+                model: { type: Boolean, default: "on" },
                 insert: true,
                 update: true
             },
@@ -76,12 +75,18 @@ class Product extends require('../templates/settings/master') {
                 update: true
             },
             inventoryStatus: {
-                schema: { type: 'string', enum: ['instock', 'outofstock', 'hidden']},
-                model: { type: String },
+                schema: { type: 'string', enum: ['on', 'off']},
+                model: { type: String , default: "off"},
                 insert: true,
                 update: true,
                 filter: true,
-                required: true
+            },
+            publicStatus: {
+                schema: { type: 'string', enum: ['instock', 'outofstock', 'hidden']},
+                model: { type: String, default: "hidden"},
+                insert: true,
+                update: true,
+                filter: true
             },
             soldCount: {
                 schema: { type: 'number' },
