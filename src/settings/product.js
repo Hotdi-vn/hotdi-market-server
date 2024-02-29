@@ -75,15 +75,15 @@ class Product extends require('../templates/settings/master') {
                 update: true
             },
             inventoryStatus: {
-                schema: { type: 'string', enum: ['on', 'off']},
-                model: { type: String , default: "off"},
+                schema: { type: 'string', enum: ['InStock', 'OutOfStock']},
+                model: { type: String , default: "InStock"},
                 insert: true,
                 update: true,
                 filter: true,
             },
             publishStatus: {
-                schema: { type: 'string', enum: ['instock', 'outofstock', 'hidden']},
-                model: { type: String, default: "hidden"},
+                schema: { type: 'string', enum: ['Draft', 'Published', 'Hidden']},
+                model: { type: String, default: "Draft"},
                 insert: true,
                 update: true,
                 filter: true
