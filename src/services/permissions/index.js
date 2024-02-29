@@ -10,7 +10,10 @@ class PermissionService extends ServiceMaster {
 const permissionService = new PermissionService(permissionModel, permissionSettings);
 const getPermission = require('./get-permission');
 const hasRight = require('./has-right');
+const updateRole = require('./update-role');
 permissionService.register('getPermission',getPermission);
 permissionService.register('hasRight',hasRight);
+permissionService.register('updateRole',updateRole);
+
 
 module.exports = permissionService;
