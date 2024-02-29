@@ -81,7 +81,7 @@ class Product extends require('../templates/settings/master') {
                 update: true,
                 filter: true,
             },
-            publicStatus: {
+            publishStatus: {
                 schema: { type: 'string', enum: ['instock', 'outofstock', 'hidden']},
                 model: { type: String, default: "hidden"},
                 insert: true,
