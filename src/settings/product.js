@@ -94,8 +94,9 @@ class Product extends require('../templates/settings/master') {
             },
             
             createdBy: {
-                schema: { type: 'string' },
-                model: { type: String }
+                schema: { type: 'string', description: 'userId of seller' },
+                model: { type: String },
+                filter: true
             },
             createdAt: {
                 schema: { type: 'number' },
