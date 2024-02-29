@@ -55,6 +55,16 @@ class Settings {
                 properties[key] = this.settings[key].schema;
             }
         }
+        const sortEnum = [];
+        for (const key in this.settings) {
+            if (this.settings[key].sort) {
+                sortEnum.push(key);
+            }
+        }
+        if (sortEnum.length > 0) {
+            properties.sortBy = { type: 'string', enum: sortEnum };
+            properties.sortType = { type: 'number', enum: [-1, 1] };
+        }
         properties.skip = { type: 'number', minimum: 0 };
         properties.limit = { type: 'number', maximum: 20 };
         return { type: 'object', properties, required }
@@ -80,7 +90,7 @@ class Settings {
                             }
                             for (const item of sender[key]) {
                                 if (object[key].indexOf(item) == -1) {
-                                object[key].push(item);
+                                    object[key].push(item);
                                 }
                             }
                         }

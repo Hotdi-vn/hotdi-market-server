@@ -83,7 +83,8 @@ class Product extends require('../templates/settings/master') {
             },
             updatedBy: {
                 schema: { type: 'string' },
-                model: { type: String }
+                model: { type: String },
+                sort: true
             },
             updatedAt: {
                 schema: { type: 'number' },
