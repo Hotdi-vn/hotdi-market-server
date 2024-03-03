@@ -8,5 +8,7 @@ class SellerService extends ServiceMaster {
 }
 
 const sellerService = new SellerService(sellerModel, sellerSettings);
+const getProductPublished = require('./get-product-published');
+sellerService.register('getProductPublished', getProductPublished);
 
 module.exports = sellerService;

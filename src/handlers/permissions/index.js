@@ -14,6 +14,7 @@ permissionHandler.registerCreateOne();
 permissionHandler.registerGetOne();
 permissionHandler.registerUpdateOne();
 permissionHandler.registerDeleteOne();
+
 const updateRoleHandler = new UpdateRoleHandler(permissionService);
 permissionHandler.register('updateRole',updateRoleHandler.handler);
 
