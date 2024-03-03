@@ -6,8 +6,8 @@ class PermissionHandler extends HandlerMaster {
         super(service);
     }
 }
-
 const permissionHandler = new PermissionHandler(permissionService);
+
 permissionHandler.registerGetAll();
 permissionHandler.registerCreateOne();
 permissionHandler.registerGetOne();
