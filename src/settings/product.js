@@ -75,15 +75,15 @@ class Product extends require('../templates/settings/master') {
                 update: true
             },
             inventoryStatus: {
-                schema: { type: 'string', enum: ['InStock', 'OutOfStock']},
-                model: { type: String , default: "InStock"},
+                schema: { type: 'string', enum: ['InStock', 'OutOfStock'] },
+                model: { type: String, default: "InStock" },
                 insert: true,
                 update: true,
                 filter: true,
             },
             publishStatus: {
-                schema: { type: 'string', enum: ['Draft', 'Published', 'Hidden']},
-                model: { type: String, default: "Draft"},
+                schema: { type: 'string', enum: ['Draft', 'Published', 'Hidden'] },
+                model: { type: String, default: "Draft" },
                 insert: true,
                 update: true,
                 filter: true
@@ -92,7 +92,34 @@ class Product extends require('../templates/settings/master') {
                 schema: { type: 'number' },
                 model: { type: Number, default: 0 }
             },
-            
+            weight: {
+                schema: { type: 'number', minimum: 0, maximum: 99999, default: 0 }, // gram
+                model: { type: Number },
+                insert: true,
+                update: true,
+                required: true
+            },
+            height: {
+                schema: { type: 'number', minimum: 0, maximum: 99999, default: 0 }, // cm
+                model: { type: Number },
+                insert: true,
+                update: true,
+                required: true
+            },
+            width: {
+                schema: { type: 'number', minimum: 0, maximum: 99999, default: 0 }, // cm
+                model: { type: Number },
+                insert: true,
+                update: true,
+                required: true
+            },
+            length: {
+                schema: { type: 'number', minimum: 0, maximum: 99999, default: 0 }, // cm
+                model: { type: Number },
+                insert: true,
+                update: true,
+                required: true
+            },
             createdBy: {
                 schema: { type: 'string', description: 'userId of seller' },
                 model: { type: String },
