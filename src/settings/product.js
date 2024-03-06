@@ -63,8 +63,8 @@ class Product extends require('../templates/settings/master') {
                 required: true
             },
             inventoryManagementOption: {
-                schema: { type: 'string', enum: ["on","off"] },
-                model: { type: Boolean, default: "on" },
+                schema: { type: 'boolean' },
+                model: { type: Boolean, default: true },
                 insert: true,
                 update: true
             },
