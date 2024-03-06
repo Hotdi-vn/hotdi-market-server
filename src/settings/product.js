@@ -35,7 +35,7 @@ class Product extends require('../templates/settings/master') {
                 required: true
             },
             price: {
-                schema: { type: 'number' },
+                schema: { type: 'number', minimum: 1, maximum: 999999999, default:100000 },
                 model: { type: Number },
                 insert: true,
                 update: true,
