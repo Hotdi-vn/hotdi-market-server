@@ -6,7 +6,7 @@ class Category extends require('../templates/settings/master') {
             _id: {
                 schema: { type: 'string' },
                 model: { type: String },
-                isKey: true
+                insert: true
             },
             name: {
                 schema: { type: 'string' },
@@ -19,6 +19,23 @@ class Category extends require('../templates/settings/master') {
                 model: { type: String },
                 insert: true,
                 update: true
+            },
+            parent: {
+                schema: { type: ['string','object'], additionalProperties:true, default: 0 },
+                model: { type: String, default: 0, ref: 'category' },
+                insert: true,
+                update: true,
+                filter: true
+            },
+            ancestors: {
+                schema: {
+                    type: 'array',
+                    items: {
+                        type: ['string','object'],
+                        additionalProperties:true
+                    }
+                },
+                model: { type:[{type:String, ref: 'category'}], default: [] }
             },
             createdBy: {
                 schema: { type: 'string' },
@@ -36,7 +53,9 @@ class Category extends require('../templates/settings/master') {
                 schema: { type: 'number' },
                 model: { type: Number, default: Date.now }
             }
-        }
+        };
+        super.ancentorsEnabled = true;
+        super.populate = ['parent', 'ancestors', 'parent ancestors'];
     }
 }
 

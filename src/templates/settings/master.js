@@ -3,6 +3,8 @@ class Settings {
     constructor() {
         this.resource = "masters";
         this.settings = {};
+        this.ancentorsEnabled = false;
+        this.populate = [];
     }
     generateId = () => {
         return uuidv4();

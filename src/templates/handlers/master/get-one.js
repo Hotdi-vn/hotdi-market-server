@@ -6,7 +6,11 @@ class GetOneHandler {
     handler = async(request, reply) => {
         try{
             const _id = request.params._id;
-            const data = await this.service.getOne(_id);
+            let populate = '';
+            if (request.query.populate) {
+                populate = request.query.populate;
+            }
+            const data = await this.service.getOne(_id, populate);
             reply.code(200).send({ data: data });
         } catch (error) {
             let errorCode = 'GET_ONE_ERROR';

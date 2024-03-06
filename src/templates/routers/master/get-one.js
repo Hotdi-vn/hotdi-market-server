@@ -17,6 +17,15 @@ class GetOneRouter {
                 },
                 required: ['_id']
             },
+            querystring: (this.settings.populate && this.settings.populate.length > 0) ? {
+                type: 'object',
+                properties: {
+                    populate: {
+                        type: 'string',
+                        enum: this.settings.populate
+                    }
+                }
+            } : {},
             headers: (this.authentication ? {
                 type: 'object',
                 properties: {

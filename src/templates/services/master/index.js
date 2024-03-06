@@ -8,10 +8,14 @@ class Service {
     register = (name, func) => {
         this[name] = func;
     }
-    getOne = async (id) => {
+    getOne = async (id, populate='') => {
         return new Promise(async (resolve, reject) => {
             try {
-                const item = await this.model.findById(id);
+                let query = this.model.findById(id);
+                if (populate.length > 0) {
+                    query = query.populate(populate);
+                }
+                const item = await query.exec();
                 if (item) {
                     resolve(item);
                 } else {
@@ -22,6 +26,24 @@ class Service {
             }
         });
     }
+    buildAncestors = async (item) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (this.settings.ancentorsEnabled) {
+                    const parent = await this.model.findById(item.parent);
+                    if (parent) {
+                        item.ancestors = parent.ancestors.concat([parent._id]);
+                    } else {
+                        item.ancestors = [];
+                    }
+                }
+                resolve(item);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     getAll = async (filters={}, sort={}, search='', skip=0, limit=0) => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -62,6 +84,9 @@ class Service {
                 if (item._id == null) {
                     item._id = this.generateId(item);
                 } 
+                if (this.settings.ancentorsEnabled) {
+                    await this.buildAncestors(item);
+                }
                 const newItem = await item.save();
                 resolve(newItem);
             } catch (error) {
@@ -83,6 +108,9 @@ class Service {
                 item.updatedAt = Date.now();
                 item.updatedBy = requesterId;
                 //console.log(post);
+                if (this.settings.ancentorsEnabled) {
+                    await this.buildAncestors(item);
+                }
                 const newItem = await item.save();
                 resolve(newItem);
             } catch (error) {
