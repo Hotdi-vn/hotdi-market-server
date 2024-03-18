@@ -11,6 +11,15 @@ class CreateOneHandler{
                 console.error({ id: request.id, code: 'CATEGORY_NOT_FOUND'});
                 reply.code(400).send({ error: { id: request.id, code: 'CATEGORY_NOT_FOUND' } })
             }
+
+            let minImages = 1;
+            let maxImages = 10;
+            const images = request.body.imageUrls || [];
+            if (images.length < minImages || images.length > maxImages){
+                console.error({ id: request.id, code: 'INVALID_IMAGE_COUNT'});
+                reply.code(400).send({ error: { id: request.id, code: 'INVALID_IMAGE_COUNT' } })
+            }
+
             const userId = request.user.id;
             const data = await this.service.createOne(request.body, userId);
             reply.code(200).send({ data: data });
