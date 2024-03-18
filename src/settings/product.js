@@ -40,7 +40,9 @@ class Product extends require('../templates/settings/master') {
                     items: {
                         type: ['string', 'object'],
                         additionalProperties: true
-                    }
+                    },
+                    minItems: 1,
+                    maxItems: 10
                 },
                 model: { type:[{type:String, ref: 'images'}], default: [] },
                 insert: true,
