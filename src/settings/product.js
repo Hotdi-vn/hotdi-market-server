@@ -26,6 +26,18 @@ class Product extends require('../templates/settings/master') {
                 schema: {
                     type: 'array',
                     items: {
+                        type: 'string'
+                    }
+                },
+                model: { type: Array },
+                insert: true,
+                update: true,
+                required: true
+            },
+            images: {
+                schema: {
+                    type: 'array',
+                    items: {
                         type: ['string', 'object'],
                         additionalProperties: true
                     }
