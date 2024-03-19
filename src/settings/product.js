@@ -44,7 +44,7 @@ class Product extends require('../templates/settings/master') {
                     minItems: 1,
                     maxItems: 10
                 },
-                model: { type:[{type:String, ref: 'images'}], default: [] },
+                model: { type:[{type:String, ref: 'file'}], default: [] },
                 insert: true,
                 update: true,
                 required: true
@@ -154,6 +154,7 @@ class Product extends require('../templates/settings/master') {
                 model: { type: Number, default: Date.now }
             }
         }
+        super.populate = ["images"]
     }
 }
 
