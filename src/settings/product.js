@@ -34,6 +34,21 @@ class Product extends require('../templates/settings/master') {
                 update: true,
                 required: true
             },
+            images: {
+                schema: {
+                    type: 'array',
+                    items: {
+                        type: ['string', 'object'],
+                        additionalProperties: true
+                    },
+                    minItems: 1,
+                    maxItems: 10
+                },
+                model: { type:[{type:String, ref: 'file'}], default: [] },
+                insert: true,
+                update: true,
+                required: true
+            },
             price: {
                 schema: { type: 'number', minimum: 1, maximum: 999999999, default:100000 },
                 model: { type: Number },
@@ -139,6 +154,7 @@ class Product extends require('../templates/settings/master') {
                 model: { type: Number, default: Date.now }
             }
         }
+        super.populate = ["images"]
     }
 }
 
