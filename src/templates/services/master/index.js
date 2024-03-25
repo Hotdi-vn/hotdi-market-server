@@ -44,12 +44,15 @@ class Service {
         });
     }
 
-    getAll = async (filters={}, sort={}, search='', skip=0, limit=0) => {
+    getAll = async (filters={}, populate='', sort={}, search='', skip=0, limit=0) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const query = this.model.where(filters);
+                let query = this.model.where(filters);
                 if (search.length > 0) {
                     query.where({ $text: { $search: search } });
+                }
+                if (populate.length > 0) {
+                    query = query.populate(populate);
                 }
                 const clonedQuery = query.clone();
                 const items = await query.find().sort(sort).skip(skip).limit(limit);

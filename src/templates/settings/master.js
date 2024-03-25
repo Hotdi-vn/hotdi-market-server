@@ -67,6 +67,12 @@ class Settings {
             properties.sortBy = { type: 'string', enum: sortEnum };
             properties.sortType = { type: 'number', enum: [-1, 1] };
         }
+        if (this.settings.populate && this.settings.populate.length > 0) {
+            properties.populate = {
+                    type: 'string',
+                    enum: this.settings.populate
+            }
+        }
         properties.skip = { type: 'number', minimum: 0 };
         properties.limit = { type: 'number', maximum: 20 };
         return { type: 'object', properties, required }
