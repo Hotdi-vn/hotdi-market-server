@@ -19,9 +19,7 @@ class GetProductPublishedRouter {
                 },
                 required: ['sellerId']
             },
-            headers: {
-                type: 'object'
-            },
+          
             queryString: this.settings.getFilterSchema(),
             response: {
                 200: {
