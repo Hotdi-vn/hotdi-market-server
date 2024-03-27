@@ -21,7 +21,7 @@ class Category extends require('../templates/settings/master') {
                 update: true
             },
             parent: {
-                schema: { type: ['string','object'], additionalProperties:true, default: 0 },
+                schema: { type: ['string','object'], additionalProperties:true },
                 model: { type: String, default: 0, ref: 'category' },
                 insert: true,
                 update: true,
