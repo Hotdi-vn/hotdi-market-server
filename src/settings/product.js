@@ -31,8 +31,7 @@ class Product extends require('../templates/settings/master') {
                 },
                 model: { type: Array },
                 insert: true,
-                update: true,
-                required: true
+                update: true
             },
             images: {
                 schema: {

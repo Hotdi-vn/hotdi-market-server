@@ -16,7 +16,7 @@ class GetProductPublishedHandler {
                 limit = parseInt(request.query.limit);
             }
             if (request.query.inventoryStatus != undefined) {
-                filters.inventoryStatus = request.query.inventory_status;
+                filters.inventoryStatus = request.query.inventoryStatus;
             }
             this.service.settings.extractFilterDataFromSender(filters, request.query);
             let sortBy = 'updatedAt';
@@ -31,7 +31,7 @@ class GetProductPublishedHandler {
             sort[sortBy] = sortType;
 
             const data = await this.service.getProductPublished(filters, sort, search, skip, limit);
-            response.status(200).send({ data: data.items, skip, limit, total: data.total });
+            response.code(200).send({ data: data.items, skip, limit, total: data.total });
         } catch (error) {
             let errorCode = 'GET_PRODUCT_ERROR';
             if (error.code) {
