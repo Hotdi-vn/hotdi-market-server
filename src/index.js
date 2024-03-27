@@ -113,6 +113,7 @@ fastify.register(require('./routers/products'));
 fastify.register(require('./routers/banners'));
 fastify.register(require('./routers/permissions'));
 fastify.register(require('./routers/roles'));
+fastify.register(require('./routers/products/me'));
 
 // Declare a route
 fastify.get('/', function (request, reply) {
