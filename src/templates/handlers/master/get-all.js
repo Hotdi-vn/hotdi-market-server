@@ -16,6 +16,10 @@ class GetAllHandler {
             if (request.query.limit !== undefined) {
                 limit = parseInt(request.query.limit);
             }
+            let populate = '';
+            if (request.query.populate) {
+                populate = request.query.populate;
+            }
             if (this.options.authentication) {
                 const userId = request.user.id;
                 if (this.options.userKey) {
@@ -33,7 +37,7 @@ class GetAllHandler {
             }
             const sort = {};
             sort[sortBy] = sortType;
-            const data = await this.service.getAll(filters, sort, search, skip, limit);
+            const data = await this.service.getAll(filters, populate, sort, search, skip, limit);
             reply.code(200).send({ data: data.items, skip, limit, total: data.total });
         } catch (error) {
             let errorCode = 'GET_ALL_ERROR';
