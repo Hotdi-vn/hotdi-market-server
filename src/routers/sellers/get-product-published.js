@@ -1,3 +1,5 @@
+const { getSchema } = require('../../templates/helpers/db-helper')
+const productSettings = require('../../settings/product');
 class GetProductPublishedRouter {
     constructor(settings, handler, authorization=false) {
         this.settings = settings;
@@ -17,13 +19,7 @@ class GetProductPublishedRouter {
                 },
                 required: ['sellerId']
             },
-            headers: {
-                type: 'object',
-                properties: {
-                    'authorization': { type: 'string' }
-                },
-                required: ['authorization']
-            },
+          
             queryString: this.settings.getFilterSchema(),
             response: {
                 200: {
@@ -31,7 +27,7 @@ class GetProductPublishedRouter {
                     properties: {
                         data: {
                             type: 'array',
-                            items: this.settings.getViewSchema()
+                            items: getSchema(productSettings.settings)
                         },
                         skip: { type: 'number' },
                         limit: { type: 'number' },
@@ -54,10 +50,10 @@ class GetProductPublishedRouter {
             }
         }
         const decoration = { schema: getProductPublishedSchema }
-        decoration.onRequest = [async (request, reply) => await fastify.authenticate(request, reply)]
-        if (this.authorization) {
-            decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource, 'read'))
-        }
+        // decoration.onRequest = [async (request, reply) => await fastify.authenticate(request, reply)]
+        // if (this.authorization) {
+        //     decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource, 'read'))
+        // }
         fastify.post(`/v1/${this.settings.resource}/:sellerId/products`, decoration, this.handler.getProductPublished);
     }
 }

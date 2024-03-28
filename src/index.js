@@ -74,17 +74,28 @@ fastify.decorate(
 );
 
 require("./templates/config/mongoose"); // run at require
+const File = require('./models/file.js'); // Assuming file.js is the file where your model is defined
+const { checkExistOrCreate } = require('./templates/helpers/db-helper');
+checkExistOrCreate(File);
 
-fastify.register(require("@fastify/swagger"), {
-  swagger: {
-    info: {
-      title: "Market server swagger",
-      description: "MARKET API",
-      version: process.env.VERSION,
-    },
-    externalDocs: {
-      url: "https://swagger.io",
-      description: "Find more info here",
+fastify.register(require('@fastify/swagger'), {
+    swagger: {
+        info: {
+            title: 'Market server swagger',
+            description: 'MARKET API',
+            version: process.env.VERSION
+        },
+        externalDocs: {
+            url: 'https://swagger.io',
+            description: 'Find more info here'
+        },
+        hosts: [process.env.PUBLIC_HOSTNAME],
+        basePath: process.env.PUBLIC_BASE_PATH,
+        schemes: [process.env.PUBLIC_PROTOCOL],
+        consumes: ['application/json'],
+        produces: ['application/json'],
+        tags: [],
+        definitions: {}
     },
     hosts: [process.env.PUBLIC_HOSTNAME],
     basePath: process.env.PUBLIC_BASE_PATH,
