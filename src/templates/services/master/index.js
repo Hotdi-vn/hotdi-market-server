@@ -44,7 +44,7 @@ class Service {
         });
     }
 
-    getAll = async (filters={}, populate='', sort={}, search='', skip=0, limit=0) => {
+    getAll = async (filters={}, sort={}, search='', skip=0, limit=0, populate='') => {
         return new Promise(async (resolve, reject) => {
             try {
                 let query = this.model.where(filters);
