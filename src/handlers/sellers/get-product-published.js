@@ -15,9 +15,8 @@ class GetProductPublishedHandler {
             if (request.query.limit !== undefined) {
                 limit = parseInt(request.query.limit);
             }
-            if (request.query.inventoryStatus != undefined) {
-                filters.inventoryStatus = request.query.inventoryStatus;
-            }
+            filters.inventoryStatus = 'InStock'
+
             this.service.settings.extractFilterDataFromSender(filters, request.query);
             let sortBy = 'updatedAt';
             if (request.query.sortBy) {

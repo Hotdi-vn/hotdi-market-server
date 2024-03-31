@@ -56,7 +56,7 @@ class GetProductPublishedRouter {
         // if (this.authorization) {
         //     decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource, 'read'))
         // }
-        fastify.post(`/v1/${this.settings.resource}/:sellerId/products`, decoration, this.handler.getProductPublished);
+        fastify.get(`/v1/${this.settings.resource}/:sellerId/products`, decoration, this.handler.getProductPublished);
     }
 }
 
