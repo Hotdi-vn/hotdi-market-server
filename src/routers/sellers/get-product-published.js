@@ -8,7 +8,7 @@ class GetProductPublishedRouter {
     }
     routes = async(fastify, options) => {
         const getProductPublishedSchema = {
-            description: 'seller get all products with filter: Published = "Đang đăng bán"',
+            description: 'seller get all products with filter: Published = "Đang đăng bán", InventoryStatus = "InStock"',
             tags: [this.settings.resource.toUpperCase()],
             params: {
                 type: 'object',
@@ -54,7 +54,7 @@ class GetProductPublishedRouter {
         // if (this.authorization) {
         //     decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource, 'read'))
         // }
-        fastify.post(`/v1/${this.settings.resource}/:sellerId/products`, decoration, this.handler.getProductPublished);
+        fastify.get(`/v1/${this.settings.resource}/:sellerId/products`, decoration, this.handler.getProductPublished);
     }
 }
 
