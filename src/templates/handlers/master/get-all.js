@@ -9,7 +9,7 @@ class GetAllHandler {
             const filters = {};
             const search = '';
             let skip = 0;
-            let limit = 0;
+            let limit = 20;
             if (request.query.skip !== undefined) {
                 skip = parseInt(request.query.skip);
             }
