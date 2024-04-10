@@ -37,6 +37,12 @@ class Category extends require('../templates/settings/master') {
                 },
                 model: { type: [{ type: String, ref: 'category' }], default: [] }
             },
+            showLandingPage: {
+                schema: { type: 'boolean' },
+                model: { type: Boolean, default: false },
+                insert: true,
+                update: true
+            },
             createdBy: {
                 schema: { type: 'string' },
                 model: { type: String }
