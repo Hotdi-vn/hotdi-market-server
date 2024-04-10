@@ -30,10 +30,7 @@ class Category extends require('../templates/settings/master') {
             ancestors: {
                 schema: {
                     type: 'array',
-                    items: {
-                        type: ['string', 'object'],
-                        additionalProperties: true
-                    }
+                    items: {anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }]}
                 },
                 model: { type: [{ type: String, ref: 'category' }], default: [] }
             },
