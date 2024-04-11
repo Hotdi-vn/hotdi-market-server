@@ -22,7 +22,7 @@ class Category extends require('../templates/settings/master') {
             },
             parent: {
                 schema: { anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }] },
-                model: { type: String, default: 0, ref: 'category' },
+                model: { type: String, default: "0", ref: 'category' },
                 insert: true,
                 update: true,
                 filter: true
