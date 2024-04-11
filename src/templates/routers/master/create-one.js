@@ -31,7 +31,8 @@ class CreateOneRouter {
                             properties: {
                                 id: { type: 'string' },
                                 code: { type: 'string' }
-                            }
+                            },
+                            additionalProperties: true
                         }
 
                     },

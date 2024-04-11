@@ -16,7 +16,7 @@ class CreateOneHandler{
                 errorCode = 'DUPLICATE_KEY_ERROR';
             }
             console.error({ id: request.id, code: errorCode, detail: error });
-            reply.code(400).send({ error: { id: request.id, code: errorCode } })
+            reply.code(400).send({ error: { id: request.id, code: errorCode, message: error.message } })
         }
     }
 }

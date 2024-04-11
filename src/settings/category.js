@@ -40,6 +40,10 @@ class Category extends require('../templates/settings/master') {
                 insert: true,
                 update: true
             },
+            isLeaf: {
+                schema: { type: 'boolean' },
+                model: { type: Boolean, default: true }
+            },
             createdBy: {
                 schema: { type: 'string' },
                 model: { type: String }
