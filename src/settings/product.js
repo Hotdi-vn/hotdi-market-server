@@ -63,7 +63,7 @@ class Product extends require('../templates/settings/master') {
                 insert: true,
                 update: true
             },
-            colectionType: {
+            collectionType: {
                 schema: { type: 'string', enum: ['NoiBatPhanPhat', 'SanPhamMoiToanh', 'ChoNeHotDi', 'DoTuoiRoiRoi', 'DoKhoChanAi'] },
                 model: { type: String },
                 insert: true,
