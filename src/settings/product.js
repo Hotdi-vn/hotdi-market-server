@@ -85,7 +85,7 @@ class Product extends require('../templates/settings/master') {
                 update: true
             },
             stockQuantity: {
-                schema: { type: 'number', minimum: 0, maximum: 99999, default: 0 },
+                schema: { type: 'number' },
                 model: { type: Number, default: 0 },
                 insert: true,
                 update: true
