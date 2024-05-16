@@ -8,7 +8,8 @@ if (process.env.NODE_ENV !== "production") {
 const { v4: uuidv4 } = require("uuid");
 
 // Require the framework and instantiate it
-const fastify = require("fastify")({
+const Fastify = require("fastify")
+const fastify = Fastify({
   logger: true,
   genReqId: function (req) {
     return uuidv4();
@@ -124,6 +125,8 @@ fastify.register(require("@fastify/swagger-ui"), {
 
 fastify.register(require("./routers/sellers"));
 fastify.register(require("./routers/categories"));
+fastify.register(require("./routers/carts"));
+fastify.register(require("./routers/cart-items"));
 fastify.register(require("./routers/products"));
 fastify.register(require("./routers/banners"));
 fastify.register(require("./routers/permissions"));
