@@ -14,6 +14,11 @@ class Handlers {
     getHandlers() {
         return this.handlers;
     }
+    registerGetMyAll(options={}) {
+        const GetMyAllHandler = require('./get-my-all');
+        const getMyAllHandler = new GetMyAllHandler(this.service, options);
+        this.register('getMyAll', getMyAllHandler.handler);
+    }
     registerGetAll(options={}) {
         const GetAllHandler = require('./get-all');
         const getAllHandler = new GetAllHandler(this.service, options);
