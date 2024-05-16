@@ -8,15 +8,8 @@ class Cart extends require('../templates/settings/master') {
                 model: { type: String },
                 isKey: true
             },
-            buyerId: {
-                schema: { type: 'string' },
-                model: { type: String , unique: true, index: true},
-                insert: true,
-                update: true,
-                required: true
-            },
             createdBy: {
-                schema: { type: 'string' },
+                schema: { type: 'string' , description: 'userId of buyer', unique: true, index: true},
                 model: { type: String }
             },
             createdAt: {

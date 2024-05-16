@@ -20,6 +20,7 @@ class CartItemHandler extends HandlerMaster {
 
 const cartItemHandler = new CartItemHandler(cartItemService);
 
+cartItemHandler.registerGetMyAll();
 cartItemHandler.registerGetAll();
 cartItemHandler.registerCreateOne();
 cartItemHandler.registerGetOne();

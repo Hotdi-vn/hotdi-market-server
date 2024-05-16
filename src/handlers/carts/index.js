@@ -8,6 +8,7 @@ class CartHandler extends HandlerMaster {
 
 const cartHandler = new CartHandler(cartService);
 
+cartHandler.registerGetMyAll();
 cartHandler.registerGetAll();
 cartHandler.registerCreateOne();
 cartHandler.registerGetOne();
