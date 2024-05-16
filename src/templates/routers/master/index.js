@@ -12,6 +12,13 @@ class Routers {
     register(router) {
         this.routers.push(router);
     }
+
+    registerGetMyAll(authentication=false) {
+        const GetMyAllRouter = require('./get-my-all');
+        const getMyAllRouter = new GetMyAllRouter(this.settings, this.handler, authentication);
+        this.register(getMyAllRouter.routes);
+    }
+
     registerGetAll(authentication=false) {
         const GetAllRouter = require('./get-all');
         const getAllRouter = new GetAllRouter(this.settings, this.handler, authentication);
