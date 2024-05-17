@@ -4,16 +4,11 @@ class CartItemHandler extends HandlerMaster {
     constructor(service) {
         super(service);
     }
-    registerCreateOne() {
+    registerCreateOne(options={}) {
         const CreateOneHandler = require("./create-one");
-        const createOneHandler = new CreateOneHandler(this.service);
+        const createOneHandler = new CreateOneHandler(this.service, options);
         this.register("createOne", createOneHandler.handler);
       }
-    registerUpdateOne() {
-        const UpdateOneHandler = require("./update-one");
-        const updateOneHandler = new UpdateOneHandler(this.service);
-        this.register("updateOne", updateOneHandler.handler);
-    }
 }
 
 
@@ -21,10 +16,10 @@ class CartItemHandler extends HandlerMaster {
 const cartItemHandler = new CartItemHandler(cartItemService);
 
 cartItemHandler.registerGetAll();
-cartItemHandler.registerCreateOne();
+cartItemHandler.registerCreateOne(options={checkResource: ['product']});
 cartItemHandler.registerGetOne();
 cartItemHandler.registerGetMyAll();
-cartItemHandler.registerUpdateOne();
+cartItemHandler.registerUpdateOne(options={checkResource: ['product']});
 cartItemHandler.registerDeleteOne();
 
 module.exports = cartItemHandler.getHandlers();
