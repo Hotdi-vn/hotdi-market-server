@@ -7,6 +7,9 @@ class CartItemService extends ServiceMaster {
     }
 }
 
+
 const cartItemService = new CartItemService(cartItemModel, cartItemSettings);
+const createCartIfNotExist = require('./create-cart-if-not-exist');
+cartItemService.register('createCartIfNotExist',createCartIfNotExist);
 
 module.exports = cartItemService;

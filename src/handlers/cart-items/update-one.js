@@ -4,13 +4,6 @@ class UpdateOneHandler {
     }
     handler = async(request, reply) => {
         try {
-            //verify the cartId is already exist
-            const cartService = require('../../services/carts');
-            const cartObject = await cartService.getOne(request.body?.cartId)
-            if(!cartObject){
-                console.error({ id: request.id, code: 'CART_NOT_FOUND'});
-                reply.code(400).send({ error: { id: request.id, code: 'CART_NOT_FOUND' } })
-            }
 
             //verify the productId is already exist
             const productService = require('../../services/products');

@@ -9,6 +9,7 @@ class CartItemRouter extends RouterMaster {
 
 const cartItemRouter = new CartItemRouter(cartItemSettings, cartItemHandler);
 
+cartItemRouter.registerGetMyAll(true);
 cartItemRouter.registerGetAll();
 cartItemRouter.registerCreateOne();
 cartItemRouter.registerGetOne();

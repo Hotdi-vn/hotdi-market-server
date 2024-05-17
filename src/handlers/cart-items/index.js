@@ -23,6 +23,7 @@ const cartItemHandler = new CartItemHandler(cartItemService);
 cartItemHandler.registerGetAll();
 cartItemHandler.registerCreateOne();
 cartItemHandler.registerGetOne();
+cartItemHandler.registerGetMyAll();
 cartItemHandler.registerUpdateOne();
 cartItemHandler.registerDeleteOne();
 

@@ -42,7 +42,7 @@ class GetMyAllHandler {
             const data = await this.service.getAll(filters, sort, search, skip, limit, populate);
             reply.code(200).send({ data: data.items, skip, limit, total: data.total });
         } catch (error) {
-            let errorCode = 'GET_ALL_ERROR';
+            let errorCode = 'GET_MY_ALL_ERROR';
             if (error.code) {
                 errorCode = error.code;
             }

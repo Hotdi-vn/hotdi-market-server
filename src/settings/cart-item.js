@@ -12,8 +12,7 @@ class CartItem extends require('../templates/settings/master') {
                 schema: { type: 'string' },
                 model: { type: String },
                 insert: true,
-                update: true,
-                required: true
+                update: true
             },
             productId: {
                 schema: { type: 'string' },
