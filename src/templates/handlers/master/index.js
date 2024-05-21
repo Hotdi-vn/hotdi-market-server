@@ -14,6 +14,11 @@ class Handlers {
     getHandlers() {
         return this.handlers;
     }
+    registerGetMyAll(options={}) {
+        const GetMyAllHandler = require('./get-my-all');
+        const getMyAllHandler = new GetMyAllHandler(this.service, options);
+        this.register('getMyAll', getMyAllHandler.handler);
+    }
     registerGetAll(options={}) {
         const GetAllHandler = require('./get-all');
         const getAllHandler = new GetAllHandler(this.service, options);
@@ -24,9 +29,9 @@ class Handlers {
         const getFromIdListHandler = new GetFromIdListHandler(this.service, options);
         this.register('getFromIdList', getFromIdListHandler.handler);
     }
-    registerCreateOne() {
+    registerCreateOne(options={}) {
         const CreateOneHandler = require('./create-one');
-        const createOneHandler = new CreateOneHandler(this.service);
+        const createOneHandler = new CreateOneHandler(this.service, options);
         this.register('createOne', createOneHandler.handler);
     }
     registerGetOne() {
@@ -34,9 +39,9 @@ class Handlers {
         const getOneHandler = new GetOneHandler(this.service);
         this.register('getOne', getOneHandler.handler);
     }
-    registerUpdateOne() {
+    registerUpdateOne(options={}) {
         const UpdateOneHandler = require('./update-one');
-        const updateOneHandler = new UpdateOneHandler(this.service);
+        const updateOneHandler = new UpdateOneHandler(this.service, options);
         this.register('updateOne', updateOneHandler.handler);
     }
     registerDeleteOne() {

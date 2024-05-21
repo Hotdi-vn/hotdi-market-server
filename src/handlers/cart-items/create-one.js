@@ -1,3 +1,4 @@
+
 class CreateOneHandler{
     constructor(service, options={}){
         this.service = service;
@@ -7,7 +8,7 @@ class CreateOneHandler{
         try{
             if (this.options['checkResource'] !== undefined) {
                 for (let resource of this.options['checkResource']) {
-                    let service = require(`../../../services/${resource}s`);
+                    let service = require(`../../services/${resource}s`);
                     const object = await service.getOne(request.body[`${resource}Id`])
                     if(!object){
                         console.error({ id: request.id, code: `${resource.toUpperCase()}_NOT_FOUND`});
@@ -18,18 +19,21 @@ class CreateOneHandler{
             }
 
             const userId = request.user.id;
+            const cart = await this.service.createCartIfNotExist(userId);
+            if (!cart) {
+                console.error({ id: request.id, code: 'CART_NOT_FOUND'});
+                reply.code(400).send({ error: { id: request.id, code: 'CART_NOT_FOUND' } })
+                return;
+            }
+
+            request.body.cartId = cart._id;
+            
             const data = await this.service.createOne(request.body, userId);
             reply.code(200).send({ data: data });
         } catch (error) {
-            let errorCode = 'CREATE_ONE_ERROR';
-            if (error.code) {
-                errorCode = error.code;
-            }
-            if (error.code === 11000) {
-                errorCode = 'DUPLICATE_KEY_ERROR';
-            }
+            const errorCode = error.code || 'CREATE_ONE_ERROR';
             console.error({ id: request.id, code: errorCode, detail: error });
-            reply.code(400).send({ error: { id: request.id, code: errorCode, message: error.message } })
+            reply.code(400).send({ error: { id: request.id, code: errorCode } })
         }
     }
 }
