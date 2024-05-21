@@ -8,7 +8,8 @@ if (process.env.NODE_ENV !== "production") {
 const { v4: uuidv4 } = require("uuid");
 
 // Require the framework and instantiate it
-const fastify = require("fastify")({
+const Fastify = require("fastify")
+const fastify = Fastify({
   logger: true,
   genReqId: function (req) {
     return uuidv4();
@@ -72,6 +73,15 @@ fastify.decorate(
     reply.code(401).send("Permission denied");
   }
 );
+
+fastify.setErrorHandler(function (error, request, reply) {
+  if (error.validation) {
+    let error_payload = { id: request.id, code: error.code, statusCode: error.statusCode, message: error.message }
+    reply.status(400).send({ error: error_payload })
+  } else {
+    reply.send(error)
+  }
+})
 
 require("./templates/config/mongoose"); // run at require
 const File = require("./models/file.js"); // Assuming file.js is the file where your model is defined
