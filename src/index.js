@@ -74,6 +74,15 @@ fastify.decorate(
   }
 );
 
+fastify.setErrorHandler(function (error, request, reply) {
+  if (error.validation) {
+    let error_payload = { id: request.id, code: error.code, statusCode: error.statusCode, message: error.message }
+    reply.status(400).send({ error: error_payload })
+  } else {
+    reply.send(error)
+  }
+})
+
 require("./templates/config/mongoose"); // run at require
 const File = require("./models/file.js"); // Assuming file.js is the file where your model is defined
 const { checkExistOrCreate } = require("./templates/helpers/db-helper");
