@@ -1,3 +1,4 @@
+const { singularize } = require('../../templates/helpers/string')
 
 class CreateOneHandler{
     constructor(service, options={}){
@@ -7,12 +8,12 @@ class CreateOneHandler{
     handler = async(request, reply) => {
         try{
             if (this.options['checkResource'] !== undefined) {
-                for (let resource of this.options['checkResource']) {
-                    let service = require(`../../services/${resource}s`);
-                    const object = await service.getOne(request.body[`${resource}Id`])
+                for (let service of this.options['checkResource']) {
+                    let resource_singular = singularize(service.settings.resource);
+                    const object = await service.getOne(request.body[`${resource_singular}Id`])
                     if(!object){
-                        console.error({ id: request.id, code: `${resource.toUpperCase()}_NOT_FOUND`});
-                        reply.code(400).send({ error: { id: request.id, code: `${resource.toUpperCase()}_NOT_FOUND` } })
+                        console.error({ id: request.id, code: `${resource_singular.toUpperCase()}_NOT_FOUND`});
+                        reply.code(400).send({ error: { id: request.id, code: `${resource_singular.toUpperCase()}_NOT_FOUND` } })
                         return;
                     }
                 }

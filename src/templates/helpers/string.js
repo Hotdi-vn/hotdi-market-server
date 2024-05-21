@@ -20,9 +20,16 @@ const hashText = (text) => {
     return hash.digest('hex');
 };
 
+const singularize = (text) => {
+    if (text.endsWith('ies')) {
+        return text.replace(/ies$/, 'y');
+    }
+    return text.replace(/s$/, '');
+}
 
 module.exports = {
     normalize,
     tokenize,
-    hashText
+    hashText,
+    singularize
 }

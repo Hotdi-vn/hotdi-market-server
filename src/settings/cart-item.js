@@ -11,12 +11,10 @@ class CartItem extends require('../templates/settings/master') {
             cartId: {
                 schema: { type: 'string' },
                 model: { type: String },
-                insert: true,
-                update: true
             },
             productId: {
-                schema: { type: 'string' },
-                model: { type: String },
+                schema: { anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }] },
+                model: { type: String , ref : 'product'},
                 insert: true,
                 update: true,
                 required: true
@@ -25,8 +23,7 @@ class CartItem extends require('../templates/settings/master') {
                 schema: { type: 'number', minimum: 1, maximum: 999999999, default: 100000 },
                 model: { type: Number },
                 insert: true,
-                update: true,
-                required: true
+                update: true
             },
             quantity: {
                 schema: { type: 'number', minimum: 1, maximum: 999999, default: 1 },
@@ -52,6 +49,7 @@ class CartItem extends require('../templates/settings/master') {
                 model: { type: Number, default: Date.now }
             }
         };
+        super.populate = ['productId'];
     }
 }
 
