@@ -8,7 +8,8 @@ if (process.env.NODE_ENV !== "production") {
 const { v4: uuidv4 } = require("uuid");
 
 // Require the framework and instantiate it
-const fastify = require("fastify")({
+const Fastify = require("fastify")
+const fastify = Fastify({
   logger: true,
   genReqId: function (req) {
     return uuidv4();
@@ -73,6 +74,15 @@ fastify.decorate(
   }
 );
 
+fastify.setErrorHandler(function (error, request, reply) {
+  if (error.validation) {
+    let error_payload = { id: request.id, code: error.code, statusCode: error.statusCode, message: error.message }
+    reply.status(400).send({ error: error_payload })
+  } else {
+    reply.send(error)
+  }
+})
+
 require("./templates/config/mongoose"); // run at require
 const File = require("./models/file.js"); // Assuming file.js is the file where your model is defined
 const { checkExistOrCreate } = require("./templates/helpers/db-helper");
@@ -124,6 +134,8 @@ fastify.register(require("@fastify/swagger-ui"), {
 
 fastify.register(require("./routers/sellers"));
 fastify.register(require("./routers/categories"));
+fastify.register(require("./routers/carts"));
+fastify.register(require("./routers/cart-items"));
 fastify.register(require("./routers/products"));
 fastify.register(require("./routers/banners"));
 fastify.register(require("./routers/permissions"));
