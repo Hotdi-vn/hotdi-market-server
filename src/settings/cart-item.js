@@ -11,6 +11,8 @@ class CartItem extends require('../templates/settings/master') {
             cartId: {
                 schema: { type: 'string' },
                 model: { type: String },
+                insert: true,
+                update: true,
             },
             productId: {
                 schema: { anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }] },

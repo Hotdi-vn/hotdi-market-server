@@ -1,3 +1,4 @@
+const cartItemService = require('../../services/cart-items');
 const { singularize } = require('../../templates/helpers/string')
 
 class CreateOneHandler{
@@ -27,10 +28,17 @@ class CreateOneHandler{
                 return;
             }
 
-            request.body.cartId = cart._id;
-            
-            const data = await this.service.createOne(request.body, userId);
-            reply.code(200).send({ data: data });
+            request.    body.cartId = cart._id;
+            const cartItems = await this.service.getAll({ cartId: cart._id, productId: request.body.productId });
+            if (cartItems.items.length > 0) {
+                const cartItem = cartItems.items[0];
+                cartItem.quantity += request.body.quantity;
+                const data = await this.service.updateOne(cartItem._id, cartItem, userId);
+                reply.code(200).send({ data: data });
+            } else {
+                const data = await this.service.createOne(request.body, userId);
+                reply.code(200).send({ data: data });
+            }
         } catch (error) {
             const errorCode = error.code || 'CREATE_ONE_ERROR';
             console.error({ id: request.id, code: errorCode, detail: error });
