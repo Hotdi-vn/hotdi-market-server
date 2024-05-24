@@ -106,7 +106,8 @@ class Product extends require('../templates/settings/master') {
             },
             soldCount: {
                 schema: { type: 'number' },
-                model: { type: Number, default: 0 }
+                model: { type: Number, default: 0 },
+                sort: true
             },
             weight: {
                 schema: { type: 'number', minimum: 0, maximum: 99999, default: 0 }, // gram
@@ -156,6 +157,7 @@ class Product extends require('../templates/settings/master') {
             }
         }
         super.populate = ["images"]
+        super.excludeEnabled = true;
     }
 }
 

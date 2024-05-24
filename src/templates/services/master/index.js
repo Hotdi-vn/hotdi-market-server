@@ -44,7 +44,7 @@ class Service {
         });
     }
 
-    getAll = async (filters={}, sort={}, search='', skip=0, limit=0, populate='') => {
+    getAll = async (filters={}, sort={}, search='', skip=0, limit=0, populate='', exclude=[]) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let query = this.model.where(filters);
@@ -53,6 +53,9 @@ class Service {
                 }
                 if (populate.length > 0) {
                     query = query.populate(populate);
+                }
+                if (exclude.length > 0) {
+                    query.where({ _id: { $nin: exclude } });
                 }
                 const clonedQuery = query.clone();
                 const items = await query.find().sort(sort).skip(skip).limit(limit);

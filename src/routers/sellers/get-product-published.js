@@ -20,7 +20,7 @@ class GetProductPublishedRouter {
                 required: ['sellerId']
             },
           
-            queryString: this.settings.getFilterSchema(),
+            querystring: productSettings.getFilterSchema([ 'publishStatus', 'inventoryStatus']),
             response: {
                 200: {
                     type: 'object',

@@ -1,11 +1,14 @@
 class GetProductPublishedHandler {
     constructor(service) {
-        this.service = service;
+        this.service = service; // productService
     }
     handler = async (request, response) => {
         try {
+            const filters = { };
+            this.service.settings.extractFilterDataFromSender(filters, request.query);
             const { sellerId } = request.params;
-            const filters = { createdBy: sellerId, publishStatus : "Published" };
+            filters.createdBy = sellerId;
+            filters.publishStatus = "Published" ;
             const search = '';
             let skip = 0;
             let limit = 0;
@@ -17,7 +20,7 @@ class GetProductPublishedHandler {
             }
             filters.inventoryStatus = 'InStock'
 
-            this.service.settings.extractFilterDataFromSender(filters, request.query);
+            
             let sortBy = 'updatedAt';
             if (request.query.sortBy) {
                 sortBy = request.query.sortBy;
@@ -28,8 +31,15 @@ class GetProductPublishedHandler {
             }
             const sort = {};
             sort[sortBy] = sortType;
-
-            const data = await this.service.getProductPublished(filters, sort, search, skip, limit);
+            let populate = '';
+            if (request.query.populate) {
+                populate = request.query.populate;
+            }
+            let exclude = [];
+            if (request.query.exclude) {
+                exclude = request.query.exclude;
+            }
+            const data = await this.service.getAll(filters, sort, search, skip, limit, populate, exclude);
             response.code(200).send({ data: data.items, skip, limit, total: data.total });
         } catch (error) {
             let errorCode = 'GET_PRODUCT_ERROR';

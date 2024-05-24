@@ -5,6 +5,7 @@ class Settings {
         this.settings = {};
         this.ancentorsEnabled = false;
         this.populate = [];
+        this.excludesEnabled = false;
     }
     generateId = () => {
         return uuidv4();
@@ -49,11 +50,11 @@ class Settings {
         return { type: 'object', properties, required }
     }
 
-    getFilterSchema = () => {
+    getFilterSchema = (excludedKeys=[]) => {
         const properties = {};
         const required = []
         for (const key in this.settings) {
-            if (this.settings[key].filter) {
+            if (this.settings[key].filter && excludedKeys.indexOf(key) == -1) {
                 properties[key] = this.settings[key].schema;
             }
         }
@@ -71,6 +72,14 @@ class Settings {
             properties.populate = {
                     type: 'string',
                     enum: this.settings.populate
+            }
+        }
+        if (this.excludeEnabled) {
+            properties.exclude = {
+                type: 'array',
+                items: {
+                    type: 'string'
+                }
             }
         }
         properties.skip = { type: 'number', minimum: 0 };
