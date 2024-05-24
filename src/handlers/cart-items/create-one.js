@@ -1,3 +1,5 @@
+const cartItemService = require('../../services/cart-items');
+const { singularize } = require('../../templates/helpers/string')
 
 class CreateOneHandler{
     constructor(service, options={}){
@@ -7,12 +9,12 @@ class CreateOneHandler{
     handler = async(request, reply) => {
         try{
             if (this.options['checkResource'] !== undefined) {
-                for (let resource of this.options['checkResource']) {
-                    let service = require(`../../services/${resource}s`);
-                    const object = await service.getOne(request.body[`${resource}Id`])
+                for (let service of this.options['checkResource']) {
+                    let resource_singular = singularize(service.settings.resource);
+                    const object = await service.getOne(request.body[`${resource_singular}Id`])
                     if(!object){
-                        console.error({ id: request.id, code: `${resource.toUpperCase()}_NOT_FOUND`});
-                        reply.code(400).send({ error: { id: request.id, code: `${resource.toUpperCase()}_NOT_FOUND` } })
+                        console.error({ id: request.id, code: `${resource_singular.toUpperCase()}_NOT_FOUND`});
+                        reply.code(400).send({ error: { id: request.id, code: `${resource_singular.toUpperCase()}_NOT_FOUND` } })
                         return;
                     }
                 }
@@ -26,10 +28,17 @@ class CreateOneHandler{
                 return;
             }
 
-            request.body.cartId = cart._id;
-            
-            const data = await this.service.createOne(request.body, userId);
-            reply.code(200).send({ data: data });
+            request.    body.cartId = cart._id;
+            const cartItems = await this.service.getAll({ cartId: cart._id, productId: request.body.productId });
+            if (cartItems.items.length > 0) {
+                const cartItem = cartItems.items[0];
+                cartItem.quantity += request.body.quantity;
+                const data = await this.service.updateOne(cartItem._id, cartItem, userId);
+                reply.code(200).send({ data: data });
+            } else {
+                const data = await this.service.createOne(request.body, userId);
+                reply.code(200).send({ data: data });
+            }
         } catch (error) {
             const errorCode = error.code || 'CREATE_ONE_ERROR';
             console.error({ id: request.id, code: errorCode, detail: error });
