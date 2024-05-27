@@ -68,10 +68,10 @@ class Settings {
             properties.sortBy = { type: 'string', enum: sortEnum };
             properties.sortType = { type: 'number', enum: [-1, 1] };
         }
-        if (this.settings.populate && this.settings.populate.length > 0) {
+        if (this.populate && this.populate.length > 0) {
             properties.populate = {
                     type: 'string',
-                    enum: this.settings.populate
+                    enum: this.populate
             }
         }
         if (this.excludeEnabled) {
