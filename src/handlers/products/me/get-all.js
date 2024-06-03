@@ -9,7 +9,7 @@ class GetAllHandler {
       const filters = {};
       const search = "";
       let skip = 0;
-      let limit = 0;
+      let limit = 20;
       if (request.query.skip !== undefined) {
         skip = parseInt(request.query.skip);
       }
@@ -28,12 +28,18 @@ class GetAllHandler {
       }
       const sort = {};
       sort[sortBy] = sortType;
+      let populate = "";
+      if (request.query.populate) {
+        populate = request.query.populate;
+      }
+      //console.log({ filters, sort, search, skip, limit, populate });
       const data = await this.service.getAll(
         filters,
         sort,
         search,
         skip,
-        limit
+        limit,
+        populate
       );
       reply
         .code(200)

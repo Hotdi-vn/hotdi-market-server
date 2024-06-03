@@ -45,7 +45,7 @@ class Product extends require('../templates/settings/master') {
                     minItems: 1,
                     maxItems: 10
                 },
-                model: { type: [{ type: String, ref: 'file' }], default: [] },
+                model: { type: [{ type:String, ref: 'file'}], default: [] },
                 insert: true,
                 update: true,
                 required: true
