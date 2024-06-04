@@ -6,6 +6,7 @@ class Settings {
         this.ancentorsEnabled = false;
         this.populate = [];
         this.excludesEnabled = false;
+        this.limitMax = 20;
     }
     generateId = () => {
         return uuidv4();
@@ -83,7 +84,7 @@ class Settings {
             }
         }
         properties.skip = { type: 'number', minimum: 0 };
-        properties.limit = { type: 'number', maximum: 20 };
+        properties.limit = { type: 'number', maximum: this.limitMax };
         return { type: 'object', properties, required }
     }
 
