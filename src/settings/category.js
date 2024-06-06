@@ -24,8 +24,8 @@ class Category extends require('../templates/settings/master') {
                 update: true
             },
             parent: {
-                schema: { anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }] },
-                model: { type: String, default: "0", ref: 'category' },
+                schema: { anyOf: [{ type: 'null' }, { type: 'string' }, { type: 'object', additionalProperties: true }] },
+                model: { type: String, ref: 'category' },
                 insert: true,
                 update: true,
                 filter: true
@@ -33,7 +33,7 @@ class Category extends require('../templates/settings/master') {
             ancestors: {
                 schema: {
                     type: 'array',
-                    items: {anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }]}
+                    items: {anyOf: [{ type: 'null' }, { type: 'string' }, { type: 'object', additionalProperties: true }]}
                 },
                 model: { type: [{ type: String, ref: 'category' }], default: [] }
             },
