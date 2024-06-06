@@ -100,7 +100,7 @@ class Service {
             }
         });
     }
-    updateOne = async (_id, senderData, requesterId) => {
+    updateOne = async (_id, senderData, requesterId, validateOwnership=false) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const item = await this.model.findById(_id);
@@ -108,6 +108,10 @@ class Service {
                 //if (!item || item.createdBy != requesterId) {
                 if (!item) {
                     reject({ code: 'ITEM_NOT_FOUND' });
+                    return;
+                }
+                if (validateOwnership && item.createdBy != requesterId) {
+                    reject({ code: 'ITEM_NOT_OWNED' });
                     return;
                 }
                 this.settings.extractUpdateDataFromSender(item, senderData);

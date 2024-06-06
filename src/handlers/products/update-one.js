@@ -20,7 +20,7 @@ class UpdateOneHandler {
 
             const userId = request.user.id;
             const _id = request.params._id;
-            const data = await this.service.updateOne(_id, request.body, userId);
+            const data = await this.service.updateOne(_id, request.body, userId, true);
             reply.code(200).send({ data: data });
         } catch (error) {
             const errorCode = error.code || 'UPDATE_ONE_ERROR';
