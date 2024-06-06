@@ -38,14 +38,16 @@ class Settings {
 
     getUpdateSchema = () => {
         const properties = {};
+       
         const required = []
         for (const key in this.settings) {
             if (this.settings[key].update) {
                 properties[key] = this.settings[key].schema;
             }
-            if (this.settings[key].required) {
-                required.push(key);
-            }
+             // moved required to service updateOne
+            // if (this.settings[key].required) {
+            //     required.push(key);
+            // }
         }
         return { type: 'object', properties, required }
     }
@@ -151,7 +153,9 @@ class Settings {
     getMongooseSchema = () => {
         const properties = {};
         for (const key in this.settings) {
-            properties[key] = this.settings[key].model;
+            if (this.settings[key].model) {
+                properties[key] = this.settings[key].model;
+            }
         }
         return properties
     }

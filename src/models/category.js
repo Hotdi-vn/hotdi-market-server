@@ -1,7 +1,31 @@
 const mongoose = require('mongoose');
 const categorySettings = require('../settings/category');
 
-const schema = new mongoose.Schema(categorySettings.getMongooseSchema());
+const schema = new mongoose.Schema(
+    categorySettings.getMongooseSchema(),
+    {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
+    }
+);
+
+// Create a virtual property `id` that maps to `_id`
+schema.virtual('id').get(function () {
+    return this._id;
+}).set(function (v) {
+    this._id = v;
+});
+
+// Ensure virtual fields are serialized
+schema.set('toJSON', {
+    virtuals: true,
+});
+
+schema.set('toObject', {
+    virtuals: true,
+});
+// end of alias
+
 schema.pre('save', function () {
     // You can also return a promise that rejects
     return new Promise((resolve, reject) => {

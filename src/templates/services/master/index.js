@@ -1,4 +1,5 @@
-const stringHelper = require('../../helpers/string');
+const Ajv = require('ajv');
+const ajv = new Ajv();
 
 class Service {
     constructor(model, settings) {
@@ -8,7 +9,7 @@ class Service {
     register = (name, func) => {
         this[name] = func;
     }
-    getOne = async (id, populate='') => {
+    getOne = async (id, populate = '') => {
         return new Promise(async (resolve, reject) => {
             try {
                 let query = this.model.findById(id);
@@ -44,7 +45,7 @@ class Service {
         });
     }
 
-    getAll = async (filters={}, sort={}, search='', skip=0, limit=0, populate='', exclude=[]) => {
+    getAll = async (filters = {}, sort = {}, search = '', skip = 0, limit = 0, populate = '', exclude = []) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let query = this.model.where(filters);
@@ -66,7 +67,7 @@ class Service {
             }
         });
     }
-    getFromIdList = async (idList=[]) => {
+    getFromIdList = async (idList = []) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const query = this.model.where({ _id: { $in: idList } });
@@ -89,7 +90,7 @@ class Service {
                 this.settings.extractInsertDataFromSender(item, senderData);
                 if (item._id == null) {
                     item._id = this.generateId(item);
-                } 
+                }
                 if (this.settings.ancentorsEnabled) {
                     await this.buildAncestors(item);
                 }
@@ -100,7 +101,7 @@ class Service {
             }
         });
     }
-    updateOne = async (_id, senderData, requesterId, validateOwnership=false) => {
+    updateOne = async (_id, senderData, requesterId, validateOwnership = false) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const item = await this.model.findById(_id);
@@ -114,7 +115,18 @@ class Service {
                     reject({ code: 'ITEM_NOT_OWNED' });
                     return;
                 }
+
                 this.settings.extractUpdateDataFromSender(item, senderData);
+
+                // validate item using ajv
+                const schema = this.settings.getInsertSchema();
+                schema.additionalProperties = true;
+                const valid = ajv.validate(schema, item);
+                if (!valid) {
+                    reject({ code: 'INVALID_ITEM', detail: ajv.errors });
+                    return;
+                }
+                //
                 item.updatedAt = Date.now();
                 item.updatedBy = requesterId;
                 //console.log(post);
@@ -132,13 +144,17 @@ class Service {
             }
         });
     }
-    deleteOne = async (_id, createdBy) => {
+    deleteOne = async (_id, requesterId, validateOwnership = false) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const item = await this.model.findById(_id);
                 //console.log(post);
-                if (!item ) {
+                if (!item) {
                     reject({ code: 'ITEM_NOT_FOUND' });
+                    return;
+                }
+                if (validateOwnership && item.createdBy != requesterId) {
+                    reject({ code: 'ITEM_NOT_OWNED' });
                     return;
                 }
                 await item.deleteOne();

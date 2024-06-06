@@ -4,8 +4,11 @@ class Category extends require('../templates/settings/master') {
         super.resource = 'categories';
         super.settings = {
             _id: {
-                schema: { type: 'string' },
                 model: { type: String },
+                hidden: true
+            },
+            id: {
+                schema: { type: 'string' },
                 insert: true
             },
             name: {
