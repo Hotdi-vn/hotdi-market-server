@@ -24,6 +24,15 @@ class UpdateOneRouter {
                 },
                 required: ['authorization']
             },
+            querystring: (this.settings.populate && this.settings.populate.length > 0) ? {
+                type: 'object',
+                properties: {
+                    populate: {
+                        type: 'string',
+                        enum: this.settings.populate
+                    }
+                }
+            } : {},
             body: this.settings.getUpdateSchema(),
             response: {
                 200: {

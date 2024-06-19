@@ -53,6 +53,13 @@ class Settings {
         return { type: 'object', properties, required }
     }
 
+    getPopulateSchema = () => {
+        if (this.populate.length == 0) {
+            return null;
+        }
+        return { type: 'string', enum: this.populate }
+    }
+
     getFilterSchema = (excludedKeys=[]) => {
         const properties = {};
         const required = []
@@ -71,11 +78,9 @@ class Settings {
             properties.sortBy = { type: 'string', enum: sortEnum };
             properties.sortType = { type: 'number', enum: [-1, 1] };
         }
-        if (this.populate && this.populate.length > 0) {
-            properties.populate = {
-                    type: 'string',
-                    enum: this.populate
-            }
+        const populate = this.getPopulateSchema();
+        if (populate) {
+            properties.populate = populate;
         }
         if (this.excludeEnabled) {
             properties.exclude = {

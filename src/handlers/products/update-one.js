@@ -22,7 +22,10 @@ class UpdateOneHandler {
 
             const userId = request.user.id;
             const _id = request.params._id;
-            const data = await this.service.updateOne(_id, request.body, userId, true);
+            let data = await this.service.updateOne(_id, request.body, userId, true);
+            if (request.query.populate) {
+                data = await this.service.getOne(_id, request.query.populate);
+            }
             reply.code(200).send({ data: data });
         } catch (error) {
             const errorCode = error.code || 'UPDATE_ONE_ERROR';

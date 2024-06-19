@@ -19,7 +19,10 @@ class CreateOneHandler{
             }
             
             const userId = request.user.id;
-            const data = await this.service.createOne(request.body, userId);
+            let data = await this.service.createOne(request.body, userId);
+            if (request.query.populate) {
+                data = await this.service.getOne(data._id, request.query.populate);
+            }
             reply.code(200).send({ data: data });
         } catch (error) {
             const errorCode = error.code || 'CREATE_ONE_ERROR';

@@ -15,6 +15,15 @@ class CreateOneRouter {
                 },
                 required: ['authorization']
             },
+            querystring: (this.settings.populate && this.settings.populate.length > 0) ? {
+                type: 'object',
+                properties: {
+                    populate: {
+                        type: 'string',
+                        enum: this.settings.populate
+                    }
+                }
+            } : {},
             body: this.settings.getInsertSchema(),
             response: {
                 200: {
