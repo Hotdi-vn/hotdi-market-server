@@ -48,7 +48,7 @@ class GetMyAllRouter {
         if (this.authentication) {
             decoration.onRequest = [async (request, reply) => await fastify.authenticate(request, reply)]
         }
-        fastify.get(`/v1/${this.settings.resource}/me`, decoration, this.handler.getAll);
+        fastify.get(`/v1/${this.settings.resource}/me`, decoration, this.handler.getMyAll);
     }
 }
 
