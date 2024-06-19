@@ -157,6 +157,14 @@ class Service {
                     reject({ code: 'ITEM_NOT_OWNED' });
                     return;
                 }
+                if(this.settings.softDeleteEnabled){
+                    item.deleted = true;
+                    item.deletedAt = Date.now();
+                    item.deletedBy = requesterId;
+                    await item.save();
+                    resolve(item);
+                    return;
+                }
                 await item.deleteOne();
                 resolve(item);
             } catch (error) {

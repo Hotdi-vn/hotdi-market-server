@@ -45,7 +45,7 @@ class Product extends require('../templates/settings/master') {
                     minItems: 1,
                     maxItems: 10
                 },
-                model: { type: [{ type:String, ref: 'file'}], default: [] },
+                model: { type: [{ type: String, ref: 'file' }], default: [] },
                 insert: true,
                 update: true,
                 required: true
@@ -154,10 +154,31 @@ class Product extends require('../templates/settings/master') {
             updatedAt: {
                 schema: { type: 'number' },
                 model: { type: Number, default: Date.now }
+            },
+
+            deleted: {
+                hidden: true,
+                model: {
+                    type: Boolean,
+                    default: false
+                }
+            },
+            deletedAt: {
+                hidden: true,
+                model: {
+                    type: Number
+                }
+            },
+            deletedBy: {
+                hidden: true,
+                model: {
+                    type: String
+                }
             }
         }
         super.populate = ["images"]
         super.excludeEnabled = true;
+        super.softDeleteEnabled = true;
     }
 }
 
