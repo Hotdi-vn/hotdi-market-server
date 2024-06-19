@@ -46,9 +46,20 @@ class CreateOneHandler{
                 reply.code(200).send({ data: data });
                 return;
             } else {
+                let cartItemsMap = new Map();
+
+                for (let cartItem of request.body.cartItems) {
+                    if (cartItemsMap.has(cartItem.productId)) {
+                        cartItemsMap.set(cartItem.productId, cartItemsMap.get(cartItem.productId) + cartItem.quantity);
+                    } else {
+                        cartItemsMap.set(cartItem.productId, cartItem.quantity);
+                    }
+                }
+                
+                let cartItems = Array.from(cartItemsMap, ([productId, quantity]) => ({ productId, quantity })); 
                 const data = await this.service.createOne({
                     sellerId: request.body.sellerId,
-                    cartItems: request.body.cartItems,
+                    cartItems: cartItems,
                     createdBy: userId
                 }, userId);
                 reply.code(200).send({ data: data });

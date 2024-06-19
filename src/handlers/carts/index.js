@@ -11,6 +11,16 @@ class CartHandler extends HandlerMaster {
         const createOneHandler = new CreateOneHandler(this.service, options={checkResource: [sellerService]});
         this.register("createOne", createOneHandler.handler);
     }
+    registerUpdateOne(options={}) {
+        const UpdateOneHandler = require("./update-one");
+        const updateOneHandler = new UpdateOneHandler(this.service, options={checkResource: [sellerService]});
+        this.register("updateOne", updateOneHandler.handler);
+    }
+    registerDeleteProduct() {
+        const DeleteProductHandler = require("./delete-product");
+        const deleteProductHandler = new DeleteProductHandler(this.service);
+        this.register("deleteProduct", deleteProductHandler.handler);
+    }
 }
 
 const cartHandler = new CartHandler(cartService);
@@ -19,7 +29,7 @@ cartHandler.registerGetMyAll();
 cartHandler.registerGetAll();
 cartHandler.registerCreateOne(options={checkResource: [sellerService]});
 cartHandler.registerGetOne();
-cartHandler.registerUpdateOne();
-cartHandler.registerDeleteOne();
+cartHandler.registerUpdateOne(options={checkResource: [sellerService]});
+cartHandler.registerDeleteProduct();
 
 module.exports = cartHandler.getHandlers();

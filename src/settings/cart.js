@@ -33,7 +33,7 @@ class Cart extends require('../templates/settings/master') {
                 model: {
                     type: [
                         {
-                            productId: { type: String, required: true , ref : 'product' },
+                            productId: { type: String, required: true , ref : 'product', index: true },
                             quantity: { type: Number, required: true, default : 0 }
                         }
                     ],
@@ -44,7 +44,7 @@ class Cart extends require('../templates/settings/master') {
                 required: true
             },
             createdBy: {
-                schema: { type: 'string' },
+                schema: { type: 'string', index: true },
                 model: { type: String }
             },
             createdAt: {
