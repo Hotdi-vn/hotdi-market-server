@@ -179,6 +179,8 @@ class Product extends require('../templates/settings/master') {
         super.populate = ["images"]
         super.excludeEnabled = true;
         super.softDeleteEnabled = true;
+        super.searchEnabled = true;
+        super.searchSettings = {name:"text", description:"text"};
     }
 }
 

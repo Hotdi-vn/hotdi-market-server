@@ -7,6 +7,7 @@ const normalize = (text) => {
     //https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
 }
 
+// for search, we need to tokenize the text
 const tokenize = (text) => {
     text = text.replaceAll('"', '').replaceAll("'", "").replace(/\s+/g, ' ').trim(); // clean the text
     const tokenArray = text.split(' ');

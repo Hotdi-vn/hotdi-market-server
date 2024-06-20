@@ -90,6 +90,9 @@ class Settings {
                 }
             }
         }
+        if (this.searchEnabled) {
+            properties.search = { type: 'string' };
+        }
         properties.skip = { type: 'number', minimum: 0 };
         properties.limit = { type: 'number', maximum: this.limitMax };
         return { type: 'object', properties, required }

@@ -9,7 +9,11 @@ class GetMyAllHandler {
             const filters = {};
             const userId = request.user.id;
             filters["createdBy"] = userId;
-            const search = '';
+            let search = '';
+            if (this.service.settings.searchEnabled && request.query.search){
+                search = stringHelper.tokenize(request.query.search);
+                //console.log(search);
+            }
             let skip = 0;
             let limit = 20;
             if (request.query.skip !== undefined) {

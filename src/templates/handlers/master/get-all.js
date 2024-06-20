@@ -1,3 +1,5 @@
+const stringHelper = require('../../helpers/string');
+
 class GetAllHandler {
     constructor(service, options = {}) {
         this.service = service;
@@ -7,7 +9,11 @@ class GetAllHandler {
     handler = async (request, reply) => {
         try {
             const filters = {};
-            const search = '';
+            let search = '';
+            if (this.service.settings.searchEnabled && request.query.search){
+                search = stringHelper.tokenize(request.query.search);
+                //console.log(search);
+            }
             let skip = 0;
             let limit = 20;
             if (request.query.skip !== undefined) {
