@@ -44,6 +44,12 @@ class Settings {
         for (const key in this.settings) {
             if (this.settings[key].update) {
                 properties[key] = this.settings[key].schema;
+                for (const key in this.settings) {
+                    if (this.settings[key].update) {
+                        properties[key] = this.settings[key].schema;
+                        delete properties[key].default; // Remove the "default" key
+                    }
+                }
             }
              // moved required to service updateOne
             // if (this.settings[key].required) {
