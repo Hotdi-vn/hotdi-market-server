@@ -6,6 +6,16 @@ class SellerRouter extends RouterMaster {
     constructor(settings, handler) {
         super(settings, handler)
     }
+    registerCreateMyOne() {
+        const CreateMyOneRouter = require('./me/create-one');
+        const createMyOneRouter = new CreateMyOneRouter(this.settings, this.handler);
+        this.register(createMyOneRouter.routes);
+    }
+    registerUpdateMyOne() {
+        const UpdateMyOneRouter = require('./me/update-one');
+        const updateMyOneRouter = new UpdateMyOneRouter(this.settings, this.handler);
+        this.register(updateMyOneRouter.routes);
+    }
 }
 
 const sellerRouter = new SellerRouter(sellerSettings, sellerHandler);
@@ -15,7 +25,8 @@ sellerRouter.registerCreateOne();
 sellerRouter.registerGetOne();
 sellerRouter.registerUpdateOne();
 sellerRouter.registerDeleteOne();
-
+sellerRouter.registerCreateMyOne();
+sellerRouter.registerUpdateMyOne();
 
 // custom routers
 const getProductPublishedRouter = new GetProductPublishedRouter(sellerSettings, sellerHandler);

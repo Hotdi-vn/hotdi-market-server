@@ -11,6 +11,16 @@ class SellerHandler extends HandlerMaster {
         const getProductPublishedHandler = new GetProductPublishedHandler(productService);
         this.register('getProductPublished', getProductPublishedHandler.handler);
     }
+    registerCreateMyOne() {
+        const CreateMyOneHandler = require('./me/create-one');
+        const createMyOneHandler = new CreateMyOneHandler(this.service);
+        this.register('createMyOne', createMyOneHandler.handler);
+    }
+    registerUpdateMyOne() {
+        const UpdateMyOneHandler = require('./me/update-one');
+        const updateMyOneHandler = new UpdateMyOneHandler(this.service);
+        this.register('updateMyOne', updateMyOneHandler.handler);
+    }
 }
 
 const sellerHandler = new SellerHandler(sellerService);
@@ -21,5 +31,7 @@ sellerHandler.registerGetOne();
 sellerHandler.registerUpdateOne();
 sellerHandler.registerDeleteOne();
 sellerHandler.registerGetProductPublished();
+sellerHandler.registerCreateMyOne();
+sellerHandler.registerUpdateMyOne();
 
 module.exports = sellerHandler.getHandlers();
