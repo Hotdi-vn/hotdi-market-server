@@ -1,12 +1,12 @@
-class CreateMyOneRouter {
+class UpdateMyOneRouter {
     constructor(settings, handler, authorization=false) {
         this.settings = settings;
         this.handler = handler;
         this.authorization = authorization;
     }
     routes = async(fastify, options) => {
-        const createMyOneSchema = {
-            description: 'create my seller',
+        const updateMyOneSchema = {
+            description: 'update my shop',
             tags: [this.settings.resource.toUpperCase()],
             headers: {
                 type: 'object',
@@ -48,12 +48,12 @@ class CreateMyOneRouter {
                 }
             }
         }
-        const decoration = { schema: createMyOneSchema }
+        const decoration = { schema: updateMyOneSchema }
         decoration.onRequest = [async (request, reply) => await fastify.authenticate(request, reply)]
         if (this.authorization) {
             decoration.onRequest.push(async(request, reply) => await fastify.authorize(request, reply,this.settings.resource,'create'))
         }
-        fastify.post(`/v1/${this.settings.resource}/me`, decoration, this.handler.createMyOne);
+        fastify.put(`/v1/${this.settings.resource}/me`, decoration, this.handler.updateMyOne);
     }
 }
-module.exports = CreateMyOneRouter;
+module.exports = UpdateMyOneRouter;

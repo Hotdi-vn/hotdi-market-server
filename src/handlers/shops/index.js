@@ -1,8 +1,8 @@
-const sellerService = require('../../services/sellers');
+const shopService = require('../../services/shops');
 const productService = require('../../services/products');
 const HandlerMaster = require('../../templates/handlers/master');
 
-class SellerHandler extends HandlerMaster {
+class ShopHandler extends HandlerMaster {
     constructor(service) {
         super(service);
     }
@@ -23,15 +23,15 @@ class SellerHandler extends HandlerMaster {
     }
 }
 
-const sellerHandler = new SellerHandler(sellerService);
+const shopHandler = new ShopHandler(shopService);
 
-sellerHandler.registerGetAll();
-sellerHandler.registerCreateOne();
-sellerHandler.registerGetOne();
-sellerHandler.registerUpdateOne();
-sellerHandler.registerDeleteOne();
-sellerHandler.registerGetProductPublished();
-sellerHandler.registerCreateMyOne();
-sellerHandler.registerUpdateMyOne();
+shopHandler.registerGetAll();
+shopHandler.registerCreateOne();
+shopHandler.registerGetOne();
+shopHandler.registerUpdateOne();
+shopHandler.registerDeleteOne();
+shopHandler.registerGetProductPublished();
+shopHandler.registerCreateMyOne();
+shopHandler.registerUpdateMyOne();
 
-module.exports = sellerHandler.getHandlers();
+module.exports = shopHandler.getHandlers();

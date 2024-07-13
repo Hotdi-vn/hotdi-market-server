@@ -1,6 +1,7 @@
 const { singularize } = require('../../../templates/helpers/string')
+const permissionModel = require('../../../models/permission');
 
-class CreateMyOneHandler{
+class CreateOneHandler{
     constructor(service, options={}){
         this.service = service;
         this.options = options;
@@ -23,6 +24,14 @@ class CreateMyOneHandler{
                 populate = request.query.populate;
             }
             const userId = request.user.id;
+
+            if (!request.body.status || !checkIsAdmin(userId)) {
+                delete request.body.status;
+                delete request.body.adminStatusUpdater;
+                delete request.body.adminStatusComment;
+                delete request.body.adminStatusUpdatedAt;
+            }
+
             let data = await this.service.createOne(request.body, userId, userId);
             if (request.query.populate) {
                 data = await this.service.getOne(data._id, request.query.populate);
@@ -42,4 +51,13 @@ class CreateMyOneHandler{
     }
 }
 
-module.exports = CreateMyOneHandler;
+const checkIsAdmin = async (userId) => {
+    const permission = await permissionModel.findById(userId);
+    if (permission && permission.roles && (permission.roles.includes('super-admin') || permission.roles.includes('admin'))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports = CreateOneHandler;

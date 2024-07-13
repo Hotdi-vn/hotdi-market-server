@@ -88,10 +88,15 @@ class Service {
                 item.createdBy = createdBy;
                 item.createdAt = Date.now();
                 this.settings.extractInsertDataFromSender(item, senderData);
-                if (_id == null) {
-                    item._id = this.generateId(item);
-                } else {
-                    item._id = _id;
+                console.log("HERE")
+                if (item._id == null) {
+                    console.log("HERE2")
+                    if (_id != null) { 
+                        console.log("HERE3")
+                        item._id = _id;
+                    } else {
+                        item._id = this.generateId(item);
+                    }
                 }
                 if (this.settings.ancentorsEnabled) {
                     await this.buildAncestors(item);

@@ -132,7 +132,6 @@ fastify.register(require("@fastify/swagger-ui"), {
   transformSpecificationClone: true,
 });
 
-fastify.register(require("./routers/sellers"));
 fastify.register(require("./routers/categories"));
 fastify.register(require("./routers/carts"));
 fastify.register(require("./routers/products"));
@@ -140,6 +139,7 @@ fastify.register(require("./routers/banners"));
 fastify.register(require("./routers/permissions"));
 fastify.register(require("./routers/roles"));
 fastify.register(require('./routers/locations'));
+fastify.register(require('./routers/shops'));
 
 // Declare a route
 fastify.get("/", function (request, reply) {

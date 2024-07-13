@@ -1,8 +1,8 @@
-const sellerHandler = require('../../handlers/sellers');
-const sellerSettings = require('../../settings/seller');
+const shopHandler = require('../../handlers/shops');
+const shopSettings = require('../../settings/shop');
 const RouterMaster = require('../../templates/routers/master');
 const GetProductPublishedRouter = require('./get-product-published');
-class SellerRouter extends RouterMaster {
+class ShopRouter extends RouterMaster {
     constructor(settings, handler) {
         super(settings, handler)
     }
@@ -18,18 +18,18 @@ class SellerRouter extends RouterMaster {
     }
 }
 
-const sellerRouter = new SellerRouter(sellerSettings, sellerHandler);
+const shopRouter = new ShopRouter(shopSettings, shopHandler);
 
-sellerRouter.registerGetAll();
-sellerRouter.registerCreateOne();
-sellerRouter.registerGetOne();
-sellerRouter.registerUpdateOne();
-sellerRouter.registerDeleteOne();
-sellerRouter.registerCreateMyOne();
-sellerRouter.registerUpdateMyOne();
+shopRouter.registerGetAll();
+shopRouter.registerCreateOne(true);
+shopRouter.registerGetOne();
+shopRouter.registerUpdateOne(true);
+shopRouter.registerDeleteOne(true);
+shopRouter.registerCreateMyOne();
+shopRouter.registerUpdateMyOne();
 
 // custom routers
-const getProductPublishedRouter = new GetProductPublishedRouter(sellerSettings, sellerHandler);
-sellerRouter.register(getProductPublishedRouter.routes);
+const getProductPublishedRouter = new GetProductPublishedRouter(shopSettings, shopHandler);
+shopRouter.register(getProductPublishedRouter.routes);
 
-module.exports = sellerRouter.routes;
+module.exports = shopRouter.routes;

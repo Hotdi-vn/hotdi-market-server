@@ -8,7 +8,7 @@ class GetProductPublishedRouter {
     }
     routes = async(fastify, options) => {
         const getProductPublishedSchema = {
-            description: 'seller get all products with filter: Published = "Đang đăng bán", InventoryStatus = "InStock"',
+            description: 'shop get all products with filter: Published = "Đang đăng bán", InventoryStatus = "InStock"',
             tags: [this.settings.resource.toUpperCase()],
             params: {
                 type: 'object',
