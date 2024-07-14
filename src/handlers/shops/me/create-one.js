@@ -25,10 +25,10 @@ class CreateOneHandler{
             }
             const userId = request.user.id;
 
-            if (!request.body.status || !checkIsAdmin(userId)) {
+            if (request.body.status != null || !checkIsAdmin(userId)) {
                 delete request.body.status;
+                request.body.adminStatusComment = 'auto updated by system';
                 delete request.body.adminStatusUpdater;
-                delete request.body.adminStatusComment;
                 delete request.body.adminStatusUpdatedAt;
             }
 
