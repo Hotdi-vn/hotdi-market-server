@@ -101,7 +101,7 @@ class Service {
             }
         });
     }
-    updateOne = async (_id, senderData, requesterId, validateOwnership = false) => {
+    updateOne = async (_id, senderData, requesterId, validateOwnership = false, additionalUpdateData = {}) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const item = await this.model.findById(_id);
@@ -133,6 +133,11 @@ class Service {
                 if (this.settings.ancentorsEnabled) {
                     await this.buildAncestors(item);
                 }
+                // additional update data
+                for (const key in additionalUpdateData) {
+                    item[key] = additionalUpdateData[key];
+                }
+                //
                 const newItem = await item.save();
                 resolve(newItem);
             } catch (error) {
