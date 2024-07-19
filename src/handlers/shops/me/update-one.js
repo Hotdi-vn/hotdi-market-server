@@ -22,12 +22,12 @@ class UpdateMyOneHandler {
 
             const userId = request.user.id;
 
-            if (request.body.status != null || !checkIsAdmin(userId)) {
-                request.body.status = 'WaitingApproval';
-                delete request.body.adminStatusUpdater;
-                request.body.adminStatusComment = 'auto updated by system';
-                delete request.body.adminStatusUpdatedAt;
-            }
+            // if (request.body.status != null || !checkIsAdmin(userId)) {
+            //     request.body.status = 'WaitingApproval';
+            //     delete request.body.adminStatusUpdater;
+            //     request.body.adminStatusComment = 'auto updated by system';
+            //     delete request.body.adminStatusUpdatedAt;
+            // }
 
             let data = await this.service.updateOne(userId, request.body, userId);
             if (request.query.populate) {
@@ -45,14 +45,14 @@ class UpdateMyOneHandler {
     }
 }
 
-const checkIsAdmin = async (userId) => {
-    const permission = await permissionModel.findById(userId);
-    console.log(permission.roles.includes('super-admin') || permission.roles.includes('admin'))
-    if (permission && permission.roles && (permission.roles.includes('super-admin') || permission.roles.includes('admin'))) {
-        return true;
-    } else {
-        return false;
-    }
-}
+// const checkIsAdmin = async (userId) => {
+//     const permission = await permissionModel.findById(userId);
+//     console.log(permission.roles.includes('super-admin') || permission.roles.includes('admin'))
+//     if (permission && permission.roles && (permission.roles.includes('super-admin') || permission.roles.includes('admin'))) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }
 
 module.exports = UpdateMyOneHandler;

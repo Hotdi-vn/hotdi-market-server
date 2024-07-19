@@ -1,6 +1,6 @@
 const { singularize } = require('../../../templates/helpers/string')
 
-class CreateOneHandler{
+class SubmitOneHandler{
     constructor(service, options={}){
         this.service = service;
         this.options = options;
@@ -23,10 +23,23 @@ class CreateOneHandler{
                 populate = request.query.populate;
             }
             const userId = request.user.id;
-            let username = await this.generateUsername(request.body.name);
-            let data = await this.service.createOne(request.body, userId, userId, {
-                username: username
-            });
+
+            let statusData = {
+                status: 'WaitingApproval',
+                adminStatusUpdater: 'system',
+                adminStatusComment: 'auto updated by system',
+                adminStatusUpdatedAt: Date.now()
+            }
+
+            let existingItem = await this.service.getOne(userId);
+            if (existingItem) {
+                var data = await this.service.updateOne(userId, request.body, userId, false, statusData);
+            } else {
+                let username = await this.generateUsername(request.body.name);
+                statusData.username = username;
+                var data = await this.service.createOne(userId, request.body, userId, false, statusData);
+            }
+
             if (request.query.populate) {
                 data = await this.service.getOne(data._id, request.query.populate);
             }
@@ -63,4 +76,4 @@ class CreateOneHandler{
     }
 }
 
-module.exports = CreateOneHandler;
+module.exports = SubmitOneHandler;

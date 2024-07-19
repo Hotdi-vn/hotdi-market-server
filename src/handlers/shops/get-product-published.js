@@ -6,8 +6,8 @@ class GetProductPublishedHandler {
         try {
             const filters = { };
             this.service.settings.extractFilterDataFromSender(filters, request.query);
-            const { sellerId } = request.params;
-            filters.createdBy = sellerId;
+            const { shopId } = request.params;
+            filters.createdBy = shopId;
             filters.publishStatus = "Published" ;
             const search = '';
             let skip = 0;

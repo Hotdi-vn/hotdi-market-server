@@ -21,6 +21,11 @@ class ShopHandler extends HandlerMaster {
         const updateMyOneHandler = new UpdateMyOneHandler(this.service);
         this.register('updateMyOne', updateMyOneHandler.handler);
     }
+    registerSubmitMyOne() {
+        const SubmitHandler = require('./me/submit');
+        const submitHandler = new SubmitHandler(this.service);
+        this.register('submitMyOne', submitHandler.handler);
+    }
 }
 
 const shopHandler = new ShopHandler(shopService);
@@ -33,5 +38,6 @@ shopHandler.registerDeleteOne();
 shopHandler.registerGetProductPublished();
 shopHandler.registerCreateMyOne();
 shopHandler.registerUpdateMyOne();
+shopHandler.registerSubmitMyOne();
 
 module.exports = shopHandler.getHandlers();

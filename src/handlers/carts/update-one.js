@@ -22,7 +22,7 @@ class UpdateOneHandler {
 
             const _id = request.params._id;
             // const userId = request.user.id;
-            // const sellerId = request.body.sellerId;
+            // const shopId = request.body.shopId;
             let cart;
 
             for (let cartItem of request.body.cartItems) {
@@ -32,7 +32,7 @@ class UpdateOneHandler {
                     { new: true }
                 );
             }
-            // const cart = this.model.where({'sellId': sellerId}).find({'cartItems.productId': productId});
+            // const cart = this.model.where({'shopId': shopId}).find({'cartItems.productId': productId});
 
             reply.code(200).send({ data: cart });
         } catch (error) {

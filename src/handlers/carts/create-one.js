@@ -21,7 +21,7 @@ class CreateOneHandler{
             }
 
             const userId = request.user.id;
-            const carts = await this.service.getAll({ sellerId: request.body.sellerId, createdBy: userId });
+            const carts = await this.service.getAll({ shopId: request.body.shopId, createdBy: userId });
             if (carts.items.length > 0) {
                 const cart = carts.items[0];
                 let cartItems = cart.cartItems;
@@ -58,7 +58,7 @@ class CreateOneHandler{
                 
                 let cartItems = Array.from(cartItemsMap, ([productId, quantity]) => ({ productId, quantity })); 
                 const data = await this.service.createOne({
-                    sellerId: request.body.sellerId,
+                    shopId: request.body.shopId,
                     cartItems: cartItems,
                     createdBy: userId
                 }, userId);

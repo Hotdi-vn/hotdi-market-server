@@ -16,6 +16,11 @@ class ShopRouter extends RouterMaster {
         const updateMyOneRouter = new UpdateMyOneRouter(this.settings, this.handler);
         this.register(updateMyOneRouter.routes);
     }
+    registerSubmitMyOne() {
+        const SubmitRouter = require('./me/submit');
+        const submitRouter = new SubmitRouter(this.settings, this.handler);
+        this.register(submitRouter.routes);
+    }
 }
 
 const shopRouter = new ShopRouter(shopSettings, shopHandler);
@@ -27,6 +32,7 @@ shopRouter.registerUpdateOne(true);
 shopRouter.registerDeleteOne(true);
 shopRouter.registerCreateMyOne();
 shopRouter.registerUpdateMyOne();
+shopRouter.registerSubmitMyOne();
 
 // custom routers
 const getProductPublishedRouter = new GetProductPublishedRouter(shopSettings, shopHandler);

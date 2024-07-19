@@ -8,13 +8,17 @@ class Shop extends require('../templates/settings/master') {
                 model: { type: String },
                 isKey: true
             },
+            username: {
+                schema: { type: 'string' },
+                model: { type: String, unique: true },
+                insert: true
+            },
             name: {
                 schema: { type: 'string' },
                 model: { type: String, },
                 insert: true,
                 update: true,
-                required: true,
-                unique: true
+                required: true
             },
             avatarUrl: {
                 schema: { type: 'string' },
@@ -80,16 +84,13 @@ class Shop extends require('../templates/settings/master') {
             },
             businessLicense: {
                 schema: { type: 'string', maxLength: 16 },
-                model: { type: String, match: /^[0-9]{1,16}$/ },
+                model: { type: String, match: /^[0-9]{1,16}$/, unique: true },
                 insert: true,
-                update: true,
-                unique: true
+                update: true
             },
             status: {
                 schema: { type: 'string', enum: ['New', 'WaitingApproval', 'Rejected', 'Approved'], default: 'New' },
-                model: { type: String },
-                insert: true,
-                update: true
+                model: { type: String }
             },
             adminStatusUpdater: {
                 schema: { type: 'string' },
