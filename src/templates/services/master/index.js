@@ -81,7 +81,7 @@ class Service {
     generateId = (item) => {
         return this.settings.generateId();
     }
-    createOne = async (senderData, createdBy) => {
+    createOne = async (senderData, createdBy, _id = null, additionalCreateData = {}) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const item = new this.model();
@@ -89,10 +89,18 @@ class Service {
                 item.createdAt = Date.now();
                 this.settings.extractInsertDataFromSender(item, senderData);
                 if (item._id == null) {
-                    item._id = this.generateId(item);
+                    if (_id != null) { 
+                        item._id = _id;
+                    } else {
+                        item._id = this.generateId(item);
+                    }
                 }
                 if (this.settings.ancentorsEnabled) {
                     await this.buildAncestors(item);
+                }
+                // additional create data
+                for (const key in additionalCreateData) {
+                    item[key] = additionalCreateData[key];
                 }
                 const newItem = await item.save();
                 resolve(newItem);

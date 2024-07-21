@@ -8,9 +8,9 @@ class Cart extends require('../templates/settings/master') {
                 model: { type: String },
                 isKey: true
             },
-            sellerId: {
+            shopId: {
                 schema: { anyOf: [{ type: 'string' }, { type: 'object', additionalProperties: true }] },
-                model: { type: String , ref : 'seller'},
+                model: { type: String , ref : 'shop'},
                 insert: true,
                 update: true,
                 required: true
@@ -60,7 +60,7 @@ class Cart extends require('../templates/settings/master') {
                 model: { type: Number, default: Date.now }
             }
         }; 
-        super.populate = ['sellerId', 'cartItems.productId'];
+        super.populate = ['shopId', 'cartItems.productId'];
         super.limitMax = 10;
     }
 }
