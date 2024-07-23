@@ -20,15 +20,19 @@ class Shop extends require('../templates/settings/master') {
                 update: true,
                 required: true
             },
-            avatarUrl: {
-                schema: { type: 'string' },
-                model: { type: String },
+            avatarImageId: {
+                schema: {
+                    type: 'string'
+                },
+                model: { type: String, ref: 'file' },
                 insert: true,
                 update: true
             },
-            coverImageUrl: {
-                schema: { type: 'string' },
-                model: { type: String },
+            coverImageId: {
+                schema: {
+                    type: 'string'
+                },
+                model: { type: String, ref: 'file' },
                 insert: true,
                 update: true
             },
@@ -121,6 +125,7 @@ class Shop extends require('../templates/settings/master') {
                 model: { type: Number, default: Date.now }
             }
         }
+        super.populate = ['avatarImageId', 'coverImageId'];
     }
 }
 
