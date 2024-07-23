@@ -31,13 +31,20 @@ class SubmitOneHandler{
                 adminStatusUpdatedAt: Date.now()
             }
 
-            let existingItem = await this.service.getOne(userId);
-            if (existingItem) {
-                var data = await this.service.updateOne(userId, request.body, userId, false, statusData);
-            } else {
-                let username = await this.generateUsername(request.body.name);
-                statusData.username = username;
-                var data = await this.service.createOne(userId, request.body, userId, false, statusData);
+            try {
+                let existingItem = await this.service.getOne(userId);
+                if (existingItem) {
+                    var data = await this.service.updateOne(userId, request.body, userId, false, statusData);
+                }
+            } 
+            catch (error) {
+                if (error.code === 'ITEM_NOT_FOUND') {
+                    let username = await this.generateUsername(request.body.name);
+                    statusData.username = username;
+                    var data = await this.service.createOne(request.body, userId, userId, statusData);
+                } else {
+                    throw error;
+                }
             }
 
             if (request.query.populate) {

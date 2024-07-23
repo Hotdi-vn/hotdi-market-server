@@ -21,10 +21,16 @@ class ShopRouter extends RouterMaster {
         const submitRouter = new SubmitRouter(this.settings, this.handler);
         this.register(submitRouter.routes);
     }
+    registerGetMyShop() {
+        const GetMyShopRouter = require('./me/get-one');
+        const getMyShopRouter = new GetMyShopRouter(this.settings, this.handler);
+        this.register(getMyShopRouter.routes);
+    }
 }
 
 const shopRouter = new ShopRouter(shopSettings, shopHandler);
 
+shopRouter.registerGetMyShop();
 shopRouter.registerGetAll();
 shopRouter.registerCreateOne(true);
 shopRouter.registerGetOne();

@@ -84,7 +84,7 @@ class Shop extends require('../templates/settings/master') {
             },
             businessLicense: {
                 schema: { type: 'string', maxLength: 16 },
-                model: { type: String, match: /^[0-9]{1,16}$/, unique: true },
+                model: { type: String, match: /^[0-9]{1,16}$/, unique: true, sparse: true },
                 insert: true,
                 update: true
             },
