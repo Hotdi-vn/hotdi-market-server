@@ -102,7 +102,8 @@ class Shop extends require('../templates/settings/master') {
             },
             adminStatusComment: {
                 schema: { type: 'string' },
-                model: { type: String }
+                model: { type: String },
+                update: true
             },
             adminStatusUpdatedAt: {
                 schema: { type: 'number' },

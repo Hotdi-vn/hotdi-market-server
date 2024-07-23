@@ -31,6 +31,16 @@ class ShopHandler extends HandlerMaster {
         const getMyShopHandler = new GetMyShopHandler(this.service);
         this.register('getMyShop', getMyShopHandler.handler);
     }
+    registerApproveStatus() {
+        const ApproveStatusHandler = require('./approve-status');
+        const approveStatusHandler = new ApproveStatusHandler(this.service);
+        this.register('approveStatus', approveStatusHandler.handler);
+    }
+    registerRejectStatus() {
+        const RejectStatusHandler = require('./reject-status');
+        const rejectStatusHandler = new RejectStatusHandler(this.service);
+        this.register('rejectStatus', rejectStatusHandler.handler);
+    }
 }
 
 const shopHandler = new ShopHandler(shopService);
@@ -45,5 +55,7 @@ shopHandler.registerCreateMyOne();
 shopHandler.registerUpdateMyOne();
 shopHandler.registerSubmitMyOne();
 shopHandler.registerGetMyShop();
+shopHandler.registerApproveStatus();
+shopHandler.registerRejectStatus();
 
 module.exports = shopHandler.getHandlers();
