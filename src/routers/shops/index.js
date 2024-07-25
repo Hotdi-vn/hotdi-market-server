@@ -21,10 +21,26 @@ class ShopRouter extends RouterMaster {
         const submitRouter = new SubmitRouter(this.settings, this.handler);
         this.register(submitRouter.routes);
     }
+    registerGetMyShop() {
+        const GetMyShopRouter = require('./me/get-one');
+        const getMyShopRouter = new GetMyShopRouter(this.settings, this.handler);
+        this.register(getMyShopRouter.routes);
+    }
+    registerApproveStatus() {
+        const ApproveStatusRouter = require('./approve-status');
+        const approveStatusRouter = new ApproveStatusRouter(this.settings, this.handler);
+        this.register(approveStatusRouter.routes);
+    }
+    registerRejectStatus() {
+        const RejectStatusRouter = require('./reject-status');
+        const rejectStatusRouter = new RejectStatusRouter(this.settings, this.handler);
+        this.register(rejectStatusRouter.routes);
+    }
 }
 
 const shopRouter = new ShopRouter(shopSettings, shopHandler);
 
+shopRouter.registerGetMyShop();
 shopRouter.registerGetAll();
 shopRouter.registerCreateOne(true);
 shopRouter.registerGetOne();
@@ -33,6 +49,8 @@ shopRouter.registerDeleteOne(true);
 shopRouter.registerCreateMyOne();
 shopRouter.registerUpdateMyOne();
 shopRouter.registerSubmitMyOne();
+shopRouter.registerApproveStatus();
+shopRouter.registerRejectStatus();
 
 // custom routers
 const getProductPublishedRouter = new GetProductPublishedRouter(shopSettings, shopHandler);

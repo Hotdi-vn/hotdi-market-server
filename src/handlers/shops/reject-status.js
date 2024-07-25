@@ -1,13 +1,12 @@
-const { singularize } = require('../../../templates/helpers/string')
-const permissionModel = require('../../../models/permission');
+const { singularize } = require('../../templates/helpers/string')
 
-class UpdateMyOneHandler {
-    constructor(service, options = {}) {
+class RejectStatusHandler{
+    constructor(service, options={}){
         this.service = service;
         this.options = options;
     }
     handler = async(request, reply) => {
-        try {
+        try{
             if (this.options['checkResource'] !== undefined) {
                 for (let service of this.options['checkResource']) {
                     let resource_singular = singularize(service.settings.resource);
@@ -19,16 +18,19 @@ class UpdateMyOneHandler {
                     }
                 }
             }
+            let populate = '';
+            const userId = request.user.id;
 
-            delete request.body.adminStatusComment;
-            const userId = request.user.id; 
-            let data = await this.service.updateOne(userId, request.body, userId);
-            if (request.query.populate) {
-                data = await this.service.getOne(_id, request.query.populate);
+            let statusData = {
+                status: 'Rejected',
+                adminStatusUpdater: userId,
+                adminStatusUpdatedAt: Date.now()
             }
+            const _id = request.params._id;
+            let data = await this.service.updateOne(_id, request.body, userId, false, statusData);
             reply.code(200).send({ data: data });
         } catch (error) {
-            let errorCode = 'UPDATE_ONE_ERROR';
+            let errorCode = 'REJECT_STATUS_ERROR';
             if (error.code) {
                 errorCode = error.code;
             }
@@ -38,14 +40,4 @@ class UpdateMyOneHandler {
     }
 }
 
-// const checkIsAdmin = async (userId) => {
-//     const permission = await permissionModel.findById(userId);
-//     console.log(permission.roles.includes('super-admin') || permission.roles.includes('admin'))
-//     if (permission && permission.roles && (permission.roles.includes('super-admin') || permission.roles.includes('admin'))) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
-
-module.exports = UpdateMyOneHandler;
+module.exports = RejectStatusHandler;
