@@ -66,28 +66,28 @@ class Shop extends require('../templates/settings/master') {
                 required: true
             },
             phone: {
-                schema: { type: 'string', maxLength: 11, pattern: /^[0-9]{1,11}$/},
+                schema: { type: 'string', maxLength: 11, pattern: "^[0-9]{1,11}$"},
                 model: { type: String },
                 insert: true,
                 update: true,
                 required: true
             },
             email: {
-                schema: { type: 'string', maxLength: 64, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+                schema: { type: 'string', maxLength: 64, pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$" },
                 model: { type: String },
                 insert: true,
                 update: true,
                 required: true
             },
             taxCode: {
-                schema: { type: 'string', maxLength: 14, pattern: /^[0-9]{1,14}$/ },
+                schema: { type: 'string', maxLength: 14, pattern: "^[0-9]{1,14}$" },
                 model: { type: String },
                 insert: true,
                 update: true,
                 required: true
             },
             businessLicense: {
-                schema: { type: 'string', maxLength: 16, pattern: /^[0-9]{1,16}$/ },
+                schema: { type: 'string', maxLength: 16, pattern: "^[0-9]{1,16}$" },
                 model: { type: String, unique: true, sparse: true },
                 insert: true,
                 update: true
