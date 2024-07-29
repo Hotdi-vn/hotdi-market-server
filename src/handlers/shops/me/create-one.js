@@ -50,7 +50,7 @@ class CreateOneHandler{
         let username = baseUsername;
     
         while (await this.checkIfUsernameExists(username)) {
-            username = `${baseUsername}${generateRandomNumber(7)}`;
+            username = `${baseUsername}${generateRandomNumber(3)}`;
         }
     
         return username;
