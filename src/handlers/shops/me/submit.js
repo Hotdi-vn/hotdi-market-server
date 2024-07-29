@@ -1,4 +1,5 @@
 const { singularize } = require('../../../templates/helpers/string')
+const { generateRandomNumber } = require('../../../templates/helpers/number.js')
 
 class SubmitOneHandler{
     constructor(service, options={}){
@@ -69,11 +70,9 @@ class SubmitOneHandler{
     async generateUsername(shopName) {
         let baseUsername = shopName.toLowerCase().replace(/\s+/g, '');
         let username = baseUsername;
-        let counter = 1;
     
         while (await this.checkIfUsernameExists(username)) {
-            username = `${baseUsername}_${counter}`;
-            counter++;
+            username = `${baseUsername}_${generateRandomNumber(7)}`;
         }
     
         return username;
