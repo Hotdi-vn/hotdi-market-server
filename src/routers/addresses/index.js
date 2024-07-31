@@ -9,10 +9,10 @@ class AddressRoute extends RouterMaster {
 
 const addressRouter = new AddressRoute(addressSettings, addressHandler);
 
-addressRouter.registerGetAll();
-addressRouter.registerCreateOne();
-addressRouter.registerGetOne();
-addressRouter.registerUpdateOne();
-addressRouter.registerDeleteOne();
+addressRouter.registerGetAll(true);
+addressRouter.registerCreateOne(true);
+addressRouter.registerGetOne(true);
+addressRouter.registerUpdateOne(true);
+addressRouter.registerDeleteOne(true);
 
 module.exports = addressRouter.routes;
