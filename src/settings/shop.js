@@ -44,19 +44,25 @@ class Shop extends require('../templates/settings/master') {
                 required: true
             },
             addresses: {
-                schema: { type: 'array', items: {
-                    type: 'object',
-                    properties: {
-                        city: { type: 'string' },
-                        district: { type: 'string' },
-                        ward: { type: 'string' },
-                        address: { type: 'string' }
-                    }
-                }},
-                model: { type: Array, default: [] },
+                schema: {
+                    type: 'array',
+                    items: {
+                        anyOf: [{ type: 'string' }, {
+                            type: 'object',
+                            additionalProperties: true
+                        }]
+                    },
+                    minItems: 1,
+                    maxItems: 5
+                },
+                model: {
+                    type: [
+                        { type: String, required: true , ref : 'address' },
+                    ],
+                    default: []
+                },
                 insert: true,
-                update: true,
-                required: true
+                update: true
             },
             userInCharge: {
                 schema: { type: 'string', maxLength: 64 },
@@ -103,7 +109,6 @@ class Shop extends require('../templates/settings/master') {
             adminStatusComment: {
                 schema: { type: 'string' },
                 model: { type: String },
-                update: true
             },
             adminStatusUpdatedAt: {
                 schema: { type: 'number' },
@@ -126,7 +131,7 @@ class Shop extends require('../templates/settings/master') {
                 model: { type: Number, default: Date.now }
             }
         }
-        super.populate = ['avatarImageId', 'coverImageId'];
+        super.populate = ['avatarImageId', 'coverImageId', 'addresses', 'avatarImageId coverImageId', 'avatarImageId coverImageId addresses'];
     }
 }
 

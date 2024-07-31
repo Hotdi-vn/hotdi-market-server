@@ -20,7 +20,6 @@ class UpdateMyOneHandler {
                 }
             }
 
-            delete request.body.adminStatusComment;
             const userId = request.user.id; 
             let data = await this.service.updateOne(userId, request.body, userId);
             if (request.query.populate) {

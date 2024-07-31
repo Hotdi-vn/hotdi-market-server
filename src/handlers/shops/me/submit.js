@@ -19,7 +19,6 @@ class SubmitOneHandler{
                     }
                 }
             }
-            delete request.body.adminStatusComment;
             
             let populate = '';
             if (request.query.populate) {
