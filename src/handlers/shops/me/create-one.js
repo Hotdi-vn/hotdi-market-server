@@ -45,7 +45,7 @@ class CreateOneHandler{
     }
 
     async generateUsername(shopName) {
-        let baseUsername = shopName.toLowerCase().replace(/\s+/g, '_');
+        let baseUsername = shopName.toLowerCase().replace(/\s+/g, '_').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
         let username = baseUsername;
         let counter = 1;
     
