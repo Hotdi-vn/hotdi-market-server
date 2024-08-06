@@ -1,4 +1,6 @@
+
 const mongoose = require('mongoose');
+
 class Address extends require('../templates/settings/master') {
     constructor() {
         super();
