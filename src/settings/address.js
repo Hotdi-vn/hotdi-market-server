@@ -1,3 +1,6 @@
+
+const mongoose = require('mongoose');
+
 class Address extends require('../templates/settings/master') {
     constructor() {
         super();
@@ -17,14 +20,14 @@ class Address extends require('../templates/settings/master') {
                         parent: { type: 'string' }
                     },
                     required: ['code', 'name', 'parent'],
-                    additionalProperties: false
+                    additionalProperties: true,
                 },
                 model: {
-                    type: {
+                    type: new mongoose.Schema({
                         code: { type: String, required: true },
                         name: { type: String, required: true },
                         parent: { type: String, required: true }
-                    },
+                    }, { _id: false })
                 },
                 insert: true,
                 update: true,
@@ -39,14 +42,14 @@ class Address extends require('../templates/settings/master') {
                         parent: { type: 'string' }
                     },
                     required: ['code', 'name', 'parent'],
-                    additionalProperties: false
+                    additionalProperties: true
                 },
                 model: {
-                    type: {
+                    type: new mongoose.Schema({
                         code: { type: String, required: true },
                         name: { type: String, required: true },
                         parent: { type: String, required: true }
-                    },
+                    }, { _id: false })
                 },
                 insert: true,
                 update: true,
@@ -61,14 +64,14 @@ class Address extends require('../templates/settings/master') {
                         parent: { type: 'string' }
                     },
                     required: ['code', 'name', 'parent'],
-                    additionalProperties: false
+                    additionalProperties: true
                 },
                 model: {
-                    type: {
+                    type: new mongoose.Schema({
                         code: { type: String, required: true },
                         name: { type: String, required: true },
                         parent: { type: String, required: true }
-                    },
+                    }, { _id: false })
                 },
                 insert: true,
                 update: true,
