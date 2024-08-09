@@ -16,6 +16,12 @@ schema.pre('findOne', function () {
 schema.pre('findById', function () {
     this.where({ deleted: { $ne: true } });
 });
+schema.pre('count', function () {
+    this.where({ deleted: { $ne: true } });
+});
+schema.pre('countDocuments', function () {
+    this.where({ deleted: { $ne: true } });
+});
 
 const model = mongoose.model('product', schema);
 
