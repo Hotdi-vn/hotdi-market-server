@@ -22,7 +22,10 @@ class Shop extends require('../templates/settings/master') {
             },
             avatarImageId: {
                 schema: {
-                    type: 'string'
+                    anyOf: [{ type: 'string' }, {
+                        type: 'object',
+                        additionalProperties: true
+                    }]
                 },
                 model: { type: String, ref: 'file' },
                 insert: true,
@@ -30,7 +33,10 @@ class Shop extends require('../templates/settings/master') {
             },
             coverImageId: {
                 schema: {
-                    type: 'string'
+                    anyOf: [{ type: 'string' }, {
+                        type: 'object',
+                        additionalProperties: true
+                    }]
                 },
                 model: { type: String, ref: 'file' },
                 insert: true,
